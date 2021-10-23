@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Movie Watchlist</string>
+
+    <!--region MainMenu-->
+    <string name="watchlist_menu_item">Watchlist</string>
+    <string name="top_menu_item">Top</string>
+    <string name="popular_menu_item">Popular</string>
+    <string name="upcoming_menu_item">Upcoming</string>
+    <!--endregion-->
+
+</resources>
