@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_margin"
             android:layout_marginEnd="@dimen/standard_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textColor="@color/blue_gem"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:ellipsize="end"
-            android:maxLines="2"
-            app:layout_constraintEnd_toStartOf="@id/checkbox"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgPoster"
             app:layout_constraintTop_toTopOf="@+id/imgPoster"
             tools:text="The Movie DB" />
@@ -47,15 +47,17 @@
             app:layout_constraintTop_toBottomOf="@+id/txtTitle"
             tools:text="2021" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkbox"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/thistle"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="@dimen/small_margin"
+            android:textColor="@color/slate_blue"
+            app:layout_constraintEnd_toEndOf="@id/txtTitle"
+            app:layout_constraintStart_toStartOf="@+id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtReleaseDate"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed convallis sapien. Etiam sed est nisl. Mauris suscipit dui sed nulla hendrerit malesuada." />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
