@@ -15,6 +15,6 @@ interface MovieDao {
     fun insertMovie(movie: Movie): Completable
 
     @Query("DELETE FROM movies WHERE id = :id")
-    fun deleteMovie(id: Int?): Completable
+    fun deleteMovie(id: Int): Completable
 
 }

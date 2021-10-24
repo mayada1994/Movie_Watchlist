@@ -3,6 +3,7 @@ package com.mayada1994.moviewatchlist.di
 import android.app.Application
 import androidx.room.Room
 import com.mayada1994.moviewatchlist.BuildConfig
+import com.mayada1994.moviewatchlist.db.MovieDao
 import com.mayada1994.moviewatchlist.db.WatchlistDatabase
 import com.mayada1994.moviewatchlist.services.MoviesService
 import okhttp3.OkHttpClient
@@ -34,7 +35,7 @@ object WatchlistComponent {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 
-    val moviesService = retrofit.create(MoviesService::class.java)
+    val moviesService: MoviesService = retrofit.create(MoviesService::class.java)
     //endregion
 
     //region DB
@@ -43,7 +44,7 @@ object WatchlistComponent {
         WatchlistDatabase::class.java, "watchlist.db"
     ).build()
 
-    val movieDao = database.movieDao()
+    val movieDao: MovieDao = database.movieDao()
 
     //endregion
 
