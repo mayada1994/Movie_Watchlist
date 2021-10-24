@@ -3,9 +3,12 @@
 
     <!--region MainMenu-->
     <string name="watchlist_menu_item">Watchlist</string>
-    <string name="top_menu_item">Top</string>
     <string name="popular_menu_item">Popular</string>
     <string name="upcoming_menu_item">Upcoming</string>
+    <!--endregion-->
+
+    <!--region WatchlistFragment-->
+    <string name="empty_list_message">There are currently no movies in your watchlist. Click the button below to search for some!</string>
     <!--endregion-->
 
 </resources>

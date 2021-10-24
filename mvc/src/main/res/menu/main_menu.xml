@@ -5,9 +5,6 @@
         android:checked="true"
         android:title="@string/watchlist_menu_item" />
     <item
-        android:id="@+id/top_menu_item"
-        android:title="@string/top_menu_item" />
-    <item
         android:id="@+id/popular_menu_item"
         android:title="@string/popular_menu_item" />
     <item
