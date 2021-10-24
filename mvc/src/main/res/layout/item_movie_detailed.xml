@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_tmdb" />
+            tools:src="@drawable/ic_poster_placeholder" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitle"

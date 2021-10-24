@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFragment(fragment: Fragment) {
+    fun setFragment(fragment: Fragment) {
         val current = getCurrentFragment()
         if (current != null && fragment.javaClass == current.javaClass) {
             return

@@ -16,4 +16,6 @@ class LocalDataSource {
 
     fun deleteMovie(id: Int): Completable = movieDao.deleteMovie(id)
 
+    fun deleteMovies(ids: List<Int>): Completable = movieDao.deleteMovies(ids)
+
 }

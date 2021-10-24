@@ -1,11 +1,12 @@
 package com.mayada1994.moviewatchlist.entities
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movies")
 data class Movie(
-    @SerializedName("id") val id: Int?,
+    @PrimaryKey @SerializedName("id") val id: Int?,
     @SerializedName("original_title") val originalTitle: String?,
     @SerializedName("overview") val overview: String?,
     @SerializedName("poster_path") val posterPath: String?,
