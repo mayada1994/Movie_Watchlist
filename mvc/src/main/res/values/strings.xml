@@ -15,4 +15,10 @@
     <string name="query_hint">Search</string>
     <!--endregion-->
 
+    <!--region AddMovieDialog-->
+    <string name="dialog_prompt_message">Do you wish to add this movie to your watchlist?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <!--endregion-->
+
 </resources>

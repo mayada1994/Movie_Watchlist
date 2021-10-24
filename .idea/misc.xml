@@ -14,6 +14,7 @@
         <entry key="mvc/src/main/res/drawable/splash_background.xml" value="0.36203703703703705" />
         <entry key="mvc/src/main/res/drawable/toolbar_background.xml" value="0.2171875" />
         <entry key="mvc/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="mvc/src/main/res/layout/dialog_add_movie.xml" value="0.20104166666666667" />
         <entry key="mvc/src/main/res/layout/fragment_movies.xml" value="0.20104166666666667" />
         <entry key="mvc/src/main/res/layout/fragment_search.xml" value="0.20104166666666667" />
         <entry key="mvc/src/main/res/layout/fragment_watchlist.xml" value="0.20104166666666667" />
