@@ -19,32 +19,38 @@ object WatchlistComponent {
     //region API
     private const val BASE_URL = "http://api.themoviedb.org/3/"
 
-    private val okHttpClient = OkHttpClient().newBuilder().apply {
-        if (BuildConfig.BUILD_TYPE != "release") {
-            val interceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+    private val okHttpClient by lazy {
+        OkHttpClient().newBuilder().apply {
+            if (BuildConfig.BUILD_TYPE != "release") {
+                val interceptor = HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+                addInterceptor(interceptor)
             }
-            addInterceptor(interceptor)
-        }
-    }.build()
+        }.build()
+    }
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build()
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
 
-    val moviesService: MoviesService = retrofit.create(MoviesService::class.java)
+    val moviesService: MoviesService by lazy { retrofit.create(MoviesService::class.java) }
     //endregion
 
     //region DB
-    private val database = Room.databaseBuilder(
-        application.applicationContext,
-        WatchlistDatabase::class.java, "watchlist.db"
-    ).build()
+    private val database by lazy {
+        Room.databaseBuilder(
+            application.applicationContext,
+            WatchlistDatabase::class.java, "watchlist.db"
+        ).build()
+    }
 
-    val movieDao: MovieDao = database.movieDao()
+    val movieDao: MovieDao by lazy { database.movieDao() }
 
     //endregion
 
