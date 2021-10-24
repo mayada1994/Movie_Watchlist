@@ -1,7 +1,9 @@
 package com.mayada1994.moviewatchlist.di
 
 import android.app.Application
+import androidx.room.Room
 import com.mayada1994.moviewatchlist.BuildConfig
+import com.mayada1994.moviewatchlist.db.WatchlistDatabase
 import com.mayada1994.moviewatchlist.services.MoviesService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,6 +15,7 @@ object WatchlistComponent {
 
     private lateinit var application: Application
 
+    //region API
     private const val BASE_URL = "http://api.themoviedb.org/3/"
 
     private val okHttpClient = OkHttpClient().newBuilder().apply {
@@ -32,6 +35,17 @@ object WatchlistComponent {
         .build()
 
     val moviesService = retrofit.create(MoviesService::class.java)
+    //endregion
+
+    //region DB
+    private val database = Room.databaseBuilder(
+        application.applicationContext,
+        WatchlistDatabase::class.java, "watchlist.db"
+    ).build()
+
+    val movieDao = database.movieDao()
+
+    //endregion
 
     fun init(application: Application) {
         this.application = application
