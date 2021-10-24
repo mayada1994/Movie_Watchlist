@@ -21,4 +21,8 @@
         <item name="contentPaddingRight">@dimen/standard_margin</item>
         <item name="cardBackgroundColor">@color/selago</item>
     </style>
+
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="colorControlActivated">@color/slate_blue</item>
+    </style>
 </resources>

@@ -6,6 +6,6 @@
     <color name="east_side">#AF8EB5</color>
     <color name="thistle">#E1BEE7</color>
     <color name="selago">#FFF1FF</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">@android:color/white</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>
