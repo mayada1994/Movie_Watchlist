@@ -76,10 +76,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFragmentWithoutAddingToBackStack(fragment: Fragment) {
-        val current = getCurrentFragment()
-        if (current != null && fragment.javaClass == current.javaClass) {
-            return
-        }
         supportFragmentManager.commit {
             replace(R.id.container, fragment, fragment.javaClass.simpleName)
         }
