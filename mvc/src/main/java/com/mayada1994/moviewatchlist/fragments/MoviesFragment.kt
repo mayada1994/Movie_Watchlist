@@ -167,6 +167,13 @@ class MoviesFragment : Fragment() {
         )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.clear()
+        }
+    }
+
     companion object {
         const val MOVIE_TYPE = "MOVIE_TYPE"
 
