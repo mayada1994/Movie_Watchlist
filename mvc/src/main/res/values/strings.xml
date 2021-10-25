@@ -15,6 +15,8 @@
 
     <!--region SearchFragment-->
     <string name="query_hint">Search</string>
+    <string name="no_movies_found_message">No movies found that match your query</string>
+    <string name="movie_added_to_watchlist_message">Movie added to watchlist successfully</string>
     <!--endregion-->
 
     <!--region EditWatchlistDialog-->

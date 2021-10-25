@@ -9,7 +9,7 @@ import com.mayada1994.moviewatchlist.entities.Movie
 import com.squareup.picasso.Picasso
 
 class WatchlistAdapter(
-    private val items: List<Movie>,
+    private val items: ArrayList<Movie>,
     private val listener: OnWatchlistItemSelectListener
 ) : RecyclerView.Adapter<WatchlistAdapter.WatchlistViewHolder>() {
 
@@ -24,6 +24,13 @@ class WatchlistAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun updateItems(selectedItems: List<Movie>) {
+        selectedItems.forEach { item ->
+            notifyItemRemoved(items.indexOf(item))
+            items.remove(item)
+        }
+    }
 
     inner class WatchlistViewHolder(private val itemBinding: ItemMovieWhitelistBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

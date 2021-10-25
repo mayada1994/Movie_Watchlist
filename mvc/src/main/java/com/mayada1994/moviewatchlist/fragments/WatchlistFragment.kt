@@ -70,7 +70,7 @@ class WatchlistFragment : Fragment() {
 
             if (movies.isNotEmpty()) {
                 moviesRecyclerView.adapter = WatchlistAdapter(
-                    movies,
+                    ArrayList(movies),
                     object : WatchlistAdapter.OnWatchlistItemSelectListener {
                         override fun onItemSelect(item: Movie, checked: Boolean) {
                             if (checked) {
@@ -132,7 +132,7 @@ class WatchlistFragment : Fragment() {
 
     private fun deleteMovies() {
         (requireActivity() as MainActivity).showProgress(true)
-        compositeDisposable.add(dataSource.deleteMovies(selectedMovies.map { id })
+        compositeDisposable.add(dataSource.deleteMovies(selectedMovies.toList())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { (requireActivity() as MainActivity).showProgress(false) }
@@ -143,7 +143,11 @@ class WatchlistFragment : Fragment() {
                     } else if (selectedMovies.size > 1) {
                         Toast.makeText(context, R.string.movies_deleted_message, Toast.LENGTH_SHORT).show()
                     }
-                    selectedMovies.clear()
+                    binding.run {
+                        (moviesRecyclerView.adapter as WatchlistAdapter).updateItems(selectedMovies.toList())
+                        selectedMovies.clear()
+                        fab.setImageResource(android.R.drawable.ic_input_add)
+                    }
                 }
 
                 override fun onError(e: Throwable) {

@@ -17,7 +17,7 @@ object WatchlistComponent {
     private lateinit var application: Application
 
     //region API
-    private const val BASE_URL = "http://api.themoviedb.org/3/"
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     private val okHttpClient by lazy {
         OkHttpClient().newBuilder().apply {

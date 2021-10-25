@@ -1,9 +1,6 @@
 package com.mayada1994.moviewatchlist.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.mayada1994.moviewatchlist.entities.Movie
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -17,10 +14,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: Movie): Completable
 
-    @Query("DELETE FROM movies WHERE id = :id")
-    fun deleteMovie(id: Int): Completable
-
-    @Query("DELETE FROM movies WHERE id IN (:ids)")
-    fun deleteMovies(ids: List<Int>): Completable
+    @Delete
+    fun deleteMovies(movies: List<Movie>): Completable
 
 }
