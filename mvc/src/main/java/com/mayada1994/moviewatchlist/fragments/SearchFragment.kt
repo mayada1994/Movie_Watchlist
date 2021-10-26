@@ -21,6 +21,7 @@ import com.mayada1994.moviewatchlist.activities.MainActivity
 import com.mayada1994.moviewatchlist.adapters.MoviesAdapter
 import com.mayada1994.moviewatchlist.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist.databinding.FragmentSearchBinding
+import com.mayada1994.moviewatchlist.di.WatchlistComponent
 import com.mayada1994.moviewatchlist.entities.Movie
 import com.mayada1994.moviewatchlist.entities.TmbdResponse
 import com.mayada1994.moviewatchlist.models.LocalDataSource
@@ -53,8 +54,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        localDataSource = LocalDataSource()
-        remoteDataSource = RemoteDataSource(getString(R.string.api_key))
+        localDataSource = LocalDataSource(WatchlistComponent.movieDao)
+        remoteDataSource = RemoteDataSource(WatchlistComponent.moviesService, getString(R.string.api_key))
 
         setupSearchView()
     }

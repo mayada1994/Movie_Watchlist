@@ -13,6 +13,7 @@ import com.mayada1994.moviewatchlist.activities.MainActivity
 import com.mayada1994.moviewatchlist.adapters.WatchlistAdapter
 import com.mayada1994.moviewatchlist.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist.databinding.FragmentWatchlistBinding
+import com.mayada1994.moviewatchlist.di.WatchlistComponent
 import com.mayada1994.moviewatchlist.entities.Movie
 import com.mayada1994.moviewatchlist.models.LocalDataSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,7 +44,7 @@ class WatchlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataSource = LocalDataSource()
+        dataSource = LocalDataSource(WatchlistComponent.movieDao)
 
         setListeners()
     }

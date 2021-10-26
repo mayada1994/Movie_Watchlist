@@ -1,12 +1,10 @@
 package com.mayada1994.moviewatchlist.models
 
-import com.mayada1994.moviewatchlist.di.WatchlistComponent
 import com.mayada1994.moviewatchlist.entities.TmbdResponse
+import com.mayada1994.moviewatchlist.services.MoviesService
 import io.reactivex.Single
 
-class RemoteDataSource(private val apiKey: String) {
-
-    private val moviesService = WatchlistComponent.moviesService
+class RemoteDataSource(private val  moviesService: MoviesService, private val apiKey: String) {
 
     fun searchMovie(query: String, page: Int): Single<TmbdResponse> = moviesService.searchMovie(apiKey, query, page)
 

@@ -6,12 +6,12 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movies")
 data class Movie(
-    @PrimaryKey @SerializedName("id") val id: Int?,
-    @SerializedName("original_title") val originalTitle: String?,
-    @SerializedName("overview") val overview: String?,
-    @SerializedName("poster_path") val posterPath: String?,
-    @SerializedName("release_date") val releaseDate: String?,
-    @SerializedName("title") val title: String?
+    @PrimaryKey @SerializedName("id") val id: Int? = null,
+    @SerializedName("original_title") val originalTitle: String? = null,
+    @SerializedName("overview") val overview: String? = null,
+    @SerializedName("poster_path") val posterPath: String? = null,
+    @SerializedName("release_date") val releaseDate: String? = null,
+    @SerializedName("title") val title: String? = null
 ) {
     fun getMovieTitle(): String? {
         return title ?: originalTitle
