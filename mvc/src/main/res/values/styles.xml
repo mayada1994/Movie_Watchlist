@@ -24,5 +24,6 @@
 
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="colorControlActivated">@color/slate_blue</item>
+        <item name="android:textColorHint">@color/east_side</item>
     </style>
 </resources>

@@ -9,16 +9,25 @@
 
     <!--region WatchlistFragment-->
     <string name="empty_list_message">There are currently no movies in your watchlist. Click the button below to search for some!</string>
+    <string name="movies_deleted_message">Movies deleted successfully</string>
+    <string name="movie_deleted_message">Movie deleted successfully</string>
     <!--endregion-->
 
     <!--region SearchFragment-->
     <string name="query_hint">Search</string>
+    <string name="no_movies_found_message">No movies found that match your query</string>
+    <string name="movie_added_to_watchlist_message">Movie added to watchlist successfully</string>
     <!--endregion-->
 
-    <!--region AddMovieDialog-->
-    <string name="dialog_prompt_message">Do you wish to add this movie to your watchlist?</string>
+    <!--region EditWatchlistDialog-->
+    <string name="dialog_add_movie_prompt_message">Do you wish to add this movie to your watchlist?</string>
+    <string name="dialog_delete_movie_prompt_message">Do you wish to delete this movie from your watchlist?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <!--endregion-->
+
+    <!--region Errors-->
+    <string name="general_error_message">Something went wrong. Try again later</string>
     <!--endregion-->
 
 </resources>
