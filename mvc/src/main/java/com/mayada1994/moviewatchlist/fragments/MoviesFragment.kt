@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.mayada1994.moviewatchlist.R
 import com.mayada1994.moviewatchlist.activities.MainActivity
@@ -114,6 +115,7 @@ class MoviesFragment : Fragment() {
 
     private fun setMoviesList(movies: List<Movie>) {
         with(binding) {
+            imgPlaceholder.isVisible = movies.isEmpty()
             if (movies.isNotEmpty()) {
                 moviesRecyclerView.adapter = MoviesAdapter(
                     movies,
