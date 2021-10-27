@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 import com.mayada1994.moviewatchlist_mvp.R
 import com.mayada1994.moviewatchlist_mvp.contracts.MainContract
 import com.mayada1994.moviewatchlist_mvp.databinding.ActivityMainBinding
+import com.mayada1994.moviewatchlist_mvp.fragments.WatchlistFragment
 import com.mayada1994.moviewatchlist_mvp.presenters.MainPresenter
 
 class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
@@ -38,8 +39,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private fun setMenu() {
         with(binding) {
             navigationView.menu.getItem(selectedMenuItemId)?.isChecked = true
-            //TODO: Add fragment and uncomment
-//            setFragmentWithoutAddingToBackStack(WatchlistFragment())
+            setFragmentWithoutAddingToBackStack(WatchlistFragment())
 
             navigationView.setOnItemSelectedListener { menuItem ->
                 presenter.onMenuItemSelected(menuItem.itemId)

@@ -4,6 +4,7 @@ import com.mayada1994.moviewatchlist_mvp.R
 import com.mayada1994.moviewatchlist_mvp.contracts.MainContract
 import com.mayada1994.moviewatchlist_mvp.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_mvp.fragments.MoviesFragment.MovieType
+import com.mayada1994.moviewatchlist_mvp.fragments.WatchlistFragment
 import timber.log.Timber
 
 class MainPresenter(
@@ -11,9 +12,8 @@ class MainPresenter(
 ) : MainContract.PresenterInterface {
 
     override fun onMenuItemSelected(itemId: Int) {
-        //TODO: Add fragments and uncomment
         when (itemId) {
-//            R.id.watchlist_menu_item -> viewInterface.showSelectedScreen(WatchlistFragment(), 0)
+            R.id.watchlist_menu_item -> viewInterface.showSelectedScreen(WatchlistFragment(), 0)
 
             R.id.popular_menu_item -> viewInterface.showSelectedScreen(
                 MoviesFragment.newInstance(

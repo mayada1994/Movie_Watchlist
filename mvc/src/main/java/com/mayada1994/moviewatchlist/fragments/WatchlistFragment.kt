@@ -87,6 +87,10 @@ class WatchlistFragment : Fragment() {
                                 }
                             )
                         }
+
+                        override fun checkMoviesList(movies: List<Movie>) {
+                            layoutEmptyList.isVisible = movies.isNullOrEmpty()
+                        }
                     }
                 )
             }

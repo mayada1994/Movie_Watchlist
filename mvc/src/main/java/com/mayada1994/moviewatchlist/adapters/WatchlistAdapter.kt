@@ -30,6 +30,7 @@ class WatchlistAdapter(
             notifyItemRemoved(items.indexOf(item))
             items.remove(item)
         }
+        listener.checkMoviesList(items)
     }
 
     inner class WatchlistViewHolder(private val itemBinding: ItemMovieWhitelistBinding) :
@@ -54,6 +55,7 @@ class WatchlistAdapter(
 
     interface OnWatchlistItemSelectListener {
         fun onItemSelect(item: Movie, checked: Boolean)
+        fun checkMoviesList(movies: List<Movie>)
     }
 
 }
