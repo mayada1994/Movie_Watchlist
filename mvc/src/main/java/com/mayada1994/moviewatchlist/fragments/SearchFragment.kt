@@ -98,6 +98,7 @@ class SearchFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     imgPlaceholder.isVisible = false
                     activity?.let { hideKeyboard(it) }
+                    searchView.clearFocus()
                     searchMovie(query)
                     return true
                 }

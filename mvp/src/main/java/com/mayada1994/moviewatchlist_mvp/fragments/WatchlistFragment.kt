@@ -88,8 +88,7 @@ class WatchlistFragment : Fragment(), WatchlistContract.ViewInterface {
     }
 
     override fun goToSearchScreen() {
-        //TODO: Add fragment and uncomment
-//        (requireActivity() as MainActivity).setFragment(SearchFragment())
+        (requireActivity() as MainActivity).setFragment(SearchFragment())
     }
 
     override fun showPlaceholder(isVisible: Boolean) {
