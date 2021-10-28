@@ -107,13 +107,6 @@ class MoviesFragment : Fragment(), MoviesContract.ViewInterface {
 
     companion object {
         const val MOVIE_TYPE = "MOVIE_TYPE"
-
-        @JvmStatic
-        fun newInstance(movieType: MovieType) =
-            MoviesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(MOVIE_TYPE, movieType.name)
-                }
-            }
     }
+
 }

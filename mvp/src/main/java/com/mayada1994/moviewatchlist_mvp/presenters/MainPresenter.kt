@@ -13,19 +13,24 @@ class MainPresenter(
 
     override fun onMenuItemSelected(itemId: Int) {
         when (itemId) {
-            R.id.watchlist_menu_item -> viewInterface.showSelectedScreen(WatchlistFragment(), 0)
+            R.id.watchlist_menu_item -> viewInterface.showSelectedScreen(
+                fragmentClass = WatchlistFragment::class.java,
+                selectedMenuItemId = 0
+            )
 
             R.id.popular_menu_item -> viewInterface.showSelectedScreen(
-                MoviesFragment.newInstance(
-                    MovieType.POPULAR
-                ), 1
+                fragmentClass = MoviesFragment::class.java,
+                args = MoviesFragment.MOVIE_TYPE to MovieType.POPULAR.name,
+                selectedMenuItemId = 1
             )
 
-            R.id.upcoming_menu_item -> viewInterface.showSelectedScreen(
-                MoviesFragment.newInstance(
-                    MovieType.UPCOMING
-                ), 2
-            )
+            R.id.upcoming_menu_item -> {
+                viewInterface.showSelectedScreen(
+                    fragmentClass = MoviesFragment::class.java,
+                    args = MoviesFragment.MOVIE_TYPE to MovieType.UPCOMING.name,
+                    selectedMenuItemId = 2
+                )
+            }
 
             else -> Timber.e("Unknown menu item")
         }

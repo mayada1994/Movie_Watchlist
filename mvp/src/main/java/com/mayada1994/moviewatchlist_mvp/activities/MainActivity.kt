@@ -81,10 +81,20 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         binding.progressBar.isVisible = visible
     }
 
-    override fun showSelectedScreen(fragment: Fragment, selectedMenuItemId: Int) {
+    override fun showSelectedScreen(
+        fragmentClass: Class<out Fragment>,
+        args: Pair<String, String>?,
+        selectedMenuItemId: Int
+    ) {
         this.selectedMenuItemId = selectedMenuItemId
         clearFragments()
-        setFragmentWithoutAddingToBackStack(fragment)
+        setFragmentWithoutAddingToBackStack(
+            fragmentClass.newInstance().apply {
+                args?.run {
+                    arguments = Bundle().apply { putString(first, second) }
+                }
+            }
+        )
     }
 
 }

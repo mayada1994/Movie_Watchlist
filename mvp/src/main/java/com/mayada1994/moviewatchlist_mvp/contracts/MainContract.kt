@@ -10,7 +10,7 @@ class MainContract {
     }
 
     interface ViewInterface {
-        fun showSelectedScreen(fragment: Fragment, selectedMenuItemId: Int)
+        fun showSelectedScreen(fragmentClass: Class<out Fragment>, args: Pair<String, String>? = null, selectedMenuItemId: Int)
     }
 
 }

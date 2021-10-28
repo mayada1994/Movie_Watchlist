@@ -40,7 +40,7 @@ class MoviesPresenter(
                     override fun onSuccess(response: TmbdResponse) {
                         response.results.let { movies ->
                             if (movies.isNotEmpty()) {
-                                viewInterface.setMoviesList(response.results)
+                                viewInterface.setMoviesList(movies)
                                 viewInterface.showPlaceholder(false)
                             } else {
                                 viewInterface.showPlaceholder(true)
@@ -68,7 +68,7 @@ class MoviesPresenter(
                     override fun onSuccess(response: TmbdResponse) {
                         response.results.let { movies ->
                             if (movies.isNotEmpty()) {
-                                viewInterface.setMoviesList(response.results)
+                                viewInterface.setMoviesList(movies)
                                 viewInterface.showPlaceholder(false)
                             } else {
                                 viewInterface.showPlaceholder(true)
