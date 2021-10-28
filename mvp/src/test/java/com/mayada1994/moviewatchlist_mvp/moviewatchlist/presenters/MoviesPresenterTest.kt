@@ -48,7 +48,7 @@ class MoviesPresenterTest {
      * - init is called with POPULAR as MovieType
      * Then should:
      * - call setMoviesList in viewInterface with list of movies from given TmbdResponse
-     * - call show showPlaceholder in viewInterface with false as isVisible
+     * - call showPlaceholder in viewInterface with false as isVisible
      */
     @Test
     fun check_init_Popular() {
@@ -174,7 +174,7 @@ class MoviesPresenterTest {
      * - init is called with UPCOMING as MovieType
      * Then should:
      * - call setMoviesList in viewInterface with list of movies from given TmbdResponse
-     * - call show showPlaceholder in viewInterface with false as isVisible
+     * - call showPlaceholder in viewInterface with false as isVisible
      */
     @Test
     fun check_init_Upcoming() {

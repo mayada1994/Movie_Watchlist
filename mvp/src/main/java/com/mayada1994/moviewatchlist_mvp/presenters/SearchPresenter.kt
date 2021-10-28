@@ -33,7 +33,7 @@ class SearchPresenter(
                     override fun onSuccess(response: TmbdResponse) {
                         response.results.let { movies ->
                             if (movies.isNotEmpty()) {
-                                viewInterface.setMoviesList(response.results)
+                                viewInterface.setMoviesList(movies)
                                 viewInterface.showEmptySearchResult(false)
                             } else {
                                 viewInterface.showEmptySearchResult(true)
