@@ -1,11 +1,11 @@
-package com.mayada1994.moviewatchlist.adapters
+package com.mayada1994.moviewatchlist_mvp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mayada1994.moviewatchlist.R
-import com.mayada1994.moviewatchlist.databinding.ItemMovieWhitelistBinding
-import com.mayada1994.moviewatchlist.entities.Movie
+import com.mayada1994.moviewatchlist_mvp.entities.Movie
+import com.mayada1994.moviewatchlist_mvp.R
+import com.mayada1994.moviewatchlist_mvp.databinding.ItemMovieWhitelistBinding
 import com.squareup.picasso.Picasso
 
 class WatchlistAdapter(
