@@ -12,9 +12,9 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository) : ViewMod
         modelClass.isAssignableFrom(MoviesViewModel::class.java) -> MoviesViewModel(
             moviesRepository
         ) as T
-//        modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(
-//            moviesRepository
-//        ) as T
+        modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(
+            moviesRepository
+        ) as T
         modelClass.isAssignableFrom(WatchlistViewModel::class.java) -> WatchlistViewModel(
             moviesRepository
         ) as T

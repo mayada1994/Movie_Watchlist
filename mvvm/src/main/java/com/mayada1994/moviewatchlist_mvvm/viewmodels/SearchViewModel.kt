@@ -3,7 +3,6 @@ package com.mayada1994.moviewatchlist_mvvm.viewmodels
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import com.mayada1994.moviewatchlist_mvvm.entities.TmbdResponse
-import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
 import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,25 +12,23 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
+class SearchViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
 
-    sealed class MoviesEvent {
+    sealed class SearchEvent {
         class SetMoviesList(val movies: List<Movie>) : ViewEvent
+
+        class ShowEmptySearchResult(val isVisible: Boolean) : ViewEvent
+
+        object ClearMovieList : ViewEvent
     }
 
-    private var compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
-    fun init(movieType: MovieType) {
-        when (movieType) {
-            MovieType.POPULAR -> getPopularMovies()
-            MovieType.UPCOMING -> getUpcomingMovies()
-        }
-    }
-
-    private fun getPopularMovies() {
+    fun searchMovie(query: String) {
+        setEvent(BaseEvent.ShowPlaceholder(false))
         setEvent(BaseEvent.ShowProgress(true))
         compositeDisposable.add(
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.searchMovie(query, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { setEvent(BaseEvent.ShowProgress(false)) }
@@ -39,45 +36,19 @@ class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseView
                     override fun onSuccess(response: TmbdResponse) {
                         response.results.let { movies ->
                             if (movies.isNotEmpty()) {
-                                setEvent(MoviesEvent.SetMoviesList(movies))
-                                setEvent(BaseEvent.ShowPlaceholder(false))
+                                setEvent(SearchEvent.SetMoviesList(movies))
+                                setEvent(SearchEvent.ShowEmptySearchResult(false))
                             } else {
-                                setEvent(BaseEvent.ShowPlaceholder(true))
+                                setEvent(SearchEvent.ShowEmptySearchResult(true))
+                                setEvent(SearchEvent.ClearMovieList)
                             }
                         }
                     }
 
                     override fun onError(e: Throwable) {
-                        setEvent(BaseEvent.ShowPlaceholder(true))
                         setEvent(BaseEvent.ShowMessage(R.string.general_error_message))
-                        Timber.e(e)
-                    }
-                })
-        )
-    }
-
-    private fun getUpcomingMovies() {
-        setEvent(BaseEvent.ShowProgress(true))
-        compositeDisposable.add(
-            moviesRepository.getUpcomingMovies(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally { setEvent(BaseEvent.ShowProgress(false)) }
-                .subscribeWith(object : DisposableSingleObserver<TmbdResponse>() {
-                    override fun onSuccess(response: TmbdResponse) {
-                        response.results.let { movies ->
-                            if (movies.isNotEmpty()) {
-                                setEvent(MoviesEvent.SetMoviesList(movies))
-                                setEvent(BaseEvent.ShowPlaceholder(false))
-                            } else {
-                                setEvent(BaseEvent.ShowPlaceholder(true))
-                            }
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
                         setEvent(BaseEvent.ShowPlaceholder(true))
-                        setEvent(BaseEvent.ShowMessage(R.string.general_error_message))
+                        setEvent(SearchEvent.ClearMovieList)
                         Timber.e(e)
                     }
                 })

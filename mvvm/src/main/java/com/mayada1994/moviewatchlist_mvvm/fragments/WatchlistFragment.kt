@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.activities.MainActivity
 import com.mayada1994.moviewatchlist_mvvm.adapters.WatchlistAdapter
@@ -53,7 +52,7 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.event.observe(viewLifecycleOwner, Observer { event ->
+        viewModel.event.observe(viewLifecycleOwner, { event ->
             when(event) {
                 is WatchlistEvent.SetMoviesList -> setMoviesList(event.movies)
 
@@ -111,7 +110,7 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun goToSearchScreen() {
-//        (requireActivity() as MainActivity).setFragment(SearchFragment())
+        (requireActivity() as MainActivity).setFragment(SearchFragment())
     }
 
     private fun showPlaceholder(isVisible: Boolean) {
