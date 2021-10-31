@@ -24,8 +24,6 @@ import com.mayada1994.moviewatchlist_mvp.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist_mvp.databinding.FragmentSearchBinding
 import com.mayada1994.moviewatchlist_mvp.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
-import com.mayada1994.moviewatchlist_mvp.models.LocalDataSource
-import com.mayada1994.moviewatchlist_mvp.models.RemoteDataSource
 import com.mayada1994.moviewatchlist_mvp.presenters.SearchPresenter
 
 class SearchFragment : Fragment(), SearchContract.ViewInterface {
@@ -47,8 +45,8 @@ class SearchFragment : Fragment(), SearchContract.ViewInterface {
 
         presenter = SearchPresenter(
             this,
-            LocalDataSource(WatchlistComponent.movieDao),
-            RemoteDataSource(WatchlistComponent.moviesService, getString(R.string.api_key))
+            WatchlistComponent.localDataSource,
+            WatchlistComponent.remoteDataSource
         )
 
         setupSearchView()
@@ -132,6 +130,10 @@ class SearchFragment : Fragment(), SearchContract.ViewInterface {
 
     override fun showEmptySearchResult(isVisible: Boolean) {
         binding.layoutEmptyResultList.isVisible = isVisible
+    }
+
+    override fun clearMovieList() {
+        binding.moviesRecyclerView.adapter = null
     }
 
     override fun showPlaceholder(isVisible: Boolean) {

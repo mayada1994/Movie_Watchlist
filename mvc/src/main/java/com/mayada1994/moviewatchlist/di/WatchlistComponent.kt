@@ -3,8 +3,11 @@ package com.mayada1994.moviewatchlist.di
 import android.app.Application
 import androidx.room.Room
 import com.mayada1994.moviewatchlist.BuildConfig
+import com.mayada1994.moviewatchlist.R
 import com.mayada1994.moviewatchlist.db.MovieDao
 import com.mayada1994.moviewatchlist.db.WatchlistDatabase
+import com.mayada1994.moviewatchlist.models.LocalDataSource
+import com.mayada1994.moviewatchlist.models.RemoteDataSource
 import com.mayada1994.moviewatchlist.services.MoviesService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,7 +42,11 @@ object WatchlistComponent {
             .build()
     }
 
-    val moviesService: MoviesService by lazy { retrofit.create(MoviesService::class.java) }
+    private val moviesService: MoviesService by lazy { retrofit.create(MoviesService::class.java) }
+
+    val remoteDataSource: RemoteDataSource by lazy {
+        RemoteDataSource(moviesService, application.getString(R.string.api_key))
+    }
     //endregion
 
     //region DB
@@ -50,8 +57,9 @@ object WatchlistComponent {
         ).build()
     }
 
-    val movieDao: MovieDao by lazy { database.movieDao() }
+    private val movieDao: MovieDao by lazy { database.movieDao() }
 
+    val localDataSource: LocalDataSource by lazy { LocalDataSource(movieDao) }
     //endregion
 
     fun init(application: Application) {

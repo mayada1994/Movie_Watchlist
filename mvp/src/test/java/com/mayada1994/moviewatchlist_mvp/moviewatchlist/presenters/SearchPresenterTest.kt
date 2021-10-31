@@ -114,6 +114,8 @@ class SearchPresenterTest {
 
         every { viewInterface.showEmptySearchResult(true) } just Runs
 
+        every { viewInterface.clearMovieList() } just Runs
+
         //When
         searchPresenter.searchMovie(query)
 
@@ -122,6 +124,7 @@ class SearchPresenterTest {
             viewInterface.showProgress(true)
             remoteDataSource.searchMovie(query, 1)
             viewInterface.showEmptySearchResult(true)
+            viewInterface.clearMovieList()
             viewInterface.showProgress(false)
         }
 

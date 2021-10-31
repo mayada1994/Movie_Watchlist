@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.mayada1994.moviewatchlist_mvp.R
 import com.mayada1994.moviewatchlist_mvp.activities.MainActivity
 import com.mayada1994.moviewatchlist_mvp.adapters.MoviesAdapter
 import com.mayada1994.moviewatchlist_mvp.contracts.MoviesContract
@@ -16,8 +15,6 @@ import com.mayada1994.moviewatchlist_mvp.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist_mvp.databinding.FragmentMoviesBinding
 import com.mayada1994.moviewatchlist_mvp.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
-import com.mayada1994.moviewatchlist_mvp.models.LocalDataSource
-import com.mayada1994.moviewatchlist_mvp.models.RemoteDataSource
 import com.mayada1994.moviewatchlist_mvp.presenters.MoviesPresenter
 
 class MoviesFragment : Fragment(), MoviesContract.ViewInterface {
@@ -54,8 +51,8 @@ class MoviesFragment : Fragment(), MoviesContract.ViewInterface {
 
         presenter = MoviesPresenter(
             this,
-            LocalDataSource(WatchlistComponent.movieDao),
-            RemoteDataSource(WatchlistComponent.moviesService, getString(R.string.api_key))
+            WatchlistComponent.localDataSource,
+            WatchlistComponent.remoteDataSource
         )
 
         movieType?.let { presenter.init(it) }

@@ -44,7 +44,7 @@ class WatchlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataSource = LocalDataSource(WatchlistComponent.movieDao)
+        dataSource = WatchlistComponent.localDataSource
 
         setListeners()
     }

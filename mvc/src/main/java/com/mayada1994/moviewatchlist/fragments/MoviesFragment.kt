@@ -61,8 +61,8 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        localDataSource = LocalDataSource(WatchlistComponent.movieDao)
-        remoteDataSource = RemoteDataSource(WatchlistComponent.moviesService, getString(R.string.api_key))
+        localDataSource = WatchlistComponent.localDataSource
+        remoteDataSource = WatchlistComponent.remoteDataSource
 
         when (movieType) {
             MovieType.POPULAR -> getPopularMovies()
