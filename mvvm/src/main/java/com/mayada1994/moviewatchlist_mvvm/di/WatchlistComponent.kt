@@ -2,10 +2,13 @@ package com.mayada1994.moviewatchlist_mvvm.di
 
 import android.app.Application
 import androidx.room.Room
+import com.mayada1994.moviewatchlist_mvvm.BuildConfig
+import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.db.MovieDao
 import com.mayada1994.moviewatchlist_mvvm.db.WatchlistDatabase
-import com.mayada1994.moviewatchlist_mvvm.BuildConfig
+import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
 import com.mayada1994.moviewatchlist_mvvm.services.MoviesService
+import com.mayada1994.moviewatchlist_mvvm.viewmodels.ViewModelFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -39,7 +42,7 @@ object WatchlistComponent {
             .build()
     }
 
-    val moviesService: MoviesService by lazy { retrofit.create(MoviesService::class.java) }
+    private val moviesService: MoviesService by lazy { retrofit.create(MoviesService::class.java) }
     //endregion
 
     //region DB
@@ -50,7 +53,17 @@ object WatchlistComponent {
         ).build()
     }
 
-    val movieDao: MovieDao by lazy { database.movieDao() }
+    private val movieDao: MovieDao by lazy { database.movieDao() }
+
+    private val moviesRepository: MoviesRepository by lazy {
+        MoviesRepository(
+            movieDao,
+            moviesService,
+            application.getString(R.string.api_key)
+        )
+    }
+
+    val viewModelFactory: ViewModelFactory by lazy { ViewModelFactory(moviesRepository) }
 
     //endregion
 
