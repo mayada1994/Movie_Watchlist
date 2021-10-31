@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.databinding.ActivityMainBinding
 import com.mayada1994.moviewatchlist_mvvm.di.WatchlistComponent
+import com.mayada1994.moviewatchlist_mvvm.fragments.WatchlistFragment
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel.BaseEvent
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.MainViewModel
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.MainViewModel.MainEvent
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private fun setMenu() {
         with(binding) {
             navigationView.menu.getItem(selectedMenuItemId)?.isChecked = true
-//            setFragmentWithoutAddingToBackStack(WatchlistFragment())
+            setFragmentWithoutAddingToBackStack(WatchlistFragment())
 
             navigationView.setOnItemSelectedListener { menuItem ->
                 viewModel.onMenuItemSelected(menuItem.itemId)
