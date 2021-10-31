@@ -9,9 +9,9 @@ class ViewModelFactory(private val moviesRepository: MoviesRepository) : ViewMod
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = when {
         modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel() as T
-//        modelClass.isAssignableFrom(MoviesService::class.java) -> MoviesViewModel(
-//            moviesRepository
-//        ) as T
+        modelClass.isAssignableFrom(MoviesViewModel::class.java) -> MoviesViewModel(
+            moviesRepository
+        ) as T
         else -> throw RuntimeException("Unable to create $modelClass")
     }
 

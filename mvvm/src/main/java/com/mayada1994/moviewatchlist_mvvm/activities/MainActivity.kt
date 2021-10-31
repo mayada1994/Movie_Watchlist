@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     event.selectedMenuItemId
                 )
 
-                is BaseEvent.ShowMessage -> Toast.makeText(this, event.resId, Toast.LENGTH_SHORT).show()
+                is BaseEvent.ShowMessage -> showToast(event.resId)
             }
         })
     }
@@ -115,6 +115,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun showToast(resId: Int) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
     }
 
 }
