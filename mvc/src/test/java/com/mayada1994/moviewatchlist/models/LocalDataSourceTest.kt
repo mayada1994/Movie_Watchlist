@@ -60,7 +60,7 @@ class LocalDataSourceTest {
         every { movieDao.insertMovie(movie) } returns Completable.complete()
 
         //When
-        val result = movieDao.insertMovie(movie)
+        val result = localDataSource.insertMovie(movie)
 
         //Then
         result.test().assertComplete()
@@ -79,7 +79,7 @@ class LocalDataSourceTest {
         every { movieDao.deleteMovies(movies) } returns Completable.complete()
 
         //When
-        val result = movieDao.deleteMovies(movies)
+        val result = localDataSource.deleteMovies(movies)
 
         //Then
         result.test().assertComplete()

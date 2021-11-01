@@ -15,15 +15,15 @@ import timber.log.Timber
 class WatchlistViewModel(private val moviesRepository: MoviesRepository): BaseViewModel() {
 
     sealed class WatchlistEvent {
-        class SetMoviesList(val movies: List<Movie>) : ViewEvent
+        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
 
-        class SetFloatingActionButtonImage(@DrawableRes val resId: Int) : ViewEvent
+        data class SetFloatingActionButtonImage(@DrawableRes val resId: Int) : ViewEvent
 
         object GoToSearchScreen : ViewEvent
 
         object ShowDeleteMoviesDialog : ViewEvent
 
-        class UpdateMovies(val movies: List<Movie>) : ViewEvent
+        data class UpdateMovies(val movies: List<Movie>) : ViewEvent
     }
 
     private val compositeDisposable = CompositeDisposable()

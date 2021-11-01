@@ -16,7 +16,7 @@ import timber.log.Timber
 class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
 
     sealed class MoviesEvent {
-        class SetMoviesList(val movies: List<Movie>) : ViewEvent
+        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
     }
 
     private var compositeDisposable = CompositeDisposable()

@@ -15,9 +15,9 @@ import timber.log.Timber
 class SearchViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
 
     sealed class SearchEvent {
-        class SetMoviesList(val movies: List<Movie>) : ViewEvent
+        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
 
-        class ShowEmptySearchResult(val isVisible: Boolean) : ViewEvent
+        data class ShowEmptySearchResult(val isVisible: Boolean) : ViewEvent
 
         object ClearMovieList : ViewEvent
     }

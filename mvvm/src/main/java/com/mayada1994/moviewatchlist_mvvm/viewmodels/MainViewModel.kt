@@ -10,7 +10,7 @@ import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 class MainViewModel : BaseViewModel() {
 
     sealed class MainEvent {
-        class ShowSelectedScreen(
+        data class ShowSelectedScreen(
             val fragmentClass: Class<out Fragment>,
             val args: Pair<String, String>? = null,
             val selectedMenuItemId: Int

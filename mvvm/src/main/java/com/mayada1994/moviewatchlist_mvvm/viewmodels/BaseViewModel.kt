@@ -16,8 +16,6 @@ abstract class BaseViewModel: ViewModel() {
 
         data class ShowMessage(@StringRes val resId: Int): ViewEvent
 
-        object OnDestroy: ViewEvent
-
     }
 
     private val _event = SingleLiveEvent<ViewEvent>()
