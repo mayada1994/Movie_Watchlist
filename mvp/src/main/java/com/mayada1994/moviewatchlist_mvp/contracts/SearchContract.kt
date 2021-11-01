@@ -15,6 +15,7 @@ class SearchContract {
         fun setMoviesList(movies: List<Movie>)
         fun showPlaceholder(isVisible: Boolean)
         fun showEmptySearchResult(isVisible: Boolean)
+        fun clearMovieList()
         fun showProgress(isProgressVisible: Boolean)
         fun showToast(@StringRes resId: Int)
     }

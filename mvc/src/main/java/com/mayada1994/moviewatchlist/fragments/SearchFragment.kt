@@ -54,8 +54,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        localDataSource = LocalDataSource(WatchlistComponent.movieDao)
-        remoteDataSource = RemoteDataSource(WatchlistComponent.moviesService, getString(R.string.api_key))
+        localDataSource = WatchlistComponent.localDataSource
+        remoteDataSource = WatchlistComponent.remoteDataSource
 
         setupSearchView()
     }
@@ -134,6 +134,7 @@ class SearchFragment : Fragment() {
     private fun setMoviesList(movies: List<Movie>) {
         with(binding) {
             layoutEmptyResultList.isVisible = movies.isNullOrEmpty()
+            moviesRecyclerView.adapter = null
 
             if (movies.isNotEmpty()) {
                 moviesRecyclerView.adapter = MoviesAdapter(

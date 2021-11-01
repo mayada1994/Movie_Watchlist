@@ -37,6 +37,7 @@ class SearchPresenter(
                                 viewInterface.showEmptySearchResult(false)
                             } else {
                                 viewInterface.showEmptySearchResult(true)
+                                viewInterface.clearMovieList()
                             }
                         }
                     }

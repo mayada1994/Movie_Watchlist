@@ -16,7 +16,6 @@ import com.mayada1994.moviewatchlist_mvp.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist_mvp.databinding.FragmentWatchlistBinding
 import com.mayada1994.moviewatchlist_mvp.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
-import com.mayada1994.moviewatchlist_mvp.models.LocalDataSource
 import com.mayada1994.moviewatchlist_mvp.presenters.WatchlistPresenter
 
 class WatchlistFragment : Fragment(), WatchlistContract.ViewInterface {
@@ -36,7 +35,7 @@ class WatchlistFragment : Fragment(), WatchlistContract.ViewInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = WatchlistPresenter(this, LocalDataSource(WatchlistComponent.movieDao))
+        presenter = WatchlistPresenter(this, WatchlistComponent.localDataSource)
 
         setListeners()
     }
