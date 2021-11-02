@@ -12,7 +12,7 @@ interface MovieDao {
     fun getMovies(): Single<List<Movie>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: Movie): Completable
+    fun insertMovie(movie: Movie): Single<Long>
 
     @Delete
     fun deleteMovies(movies: List<Movie>): Completable

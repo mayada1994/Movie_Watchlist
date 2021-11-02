@@ -54,7 +54,7 @@ object WatchlistComponent {
 
     private val movieDao: MovieDao by lazy { database.movieDao() }
 
-    private val moviesRepository: MoviesRepository by lazy {
+    val moviesRepository: MoviesRepository by lazy {
         MoviesRepository(
             movieDao,
             moviesService,

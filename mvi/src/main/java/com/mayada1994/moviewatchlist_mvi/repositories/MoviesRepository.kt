@@ -17,7 +17,7 @@ class MoviesRepository(
 
     fun getMovies(): Single<List<Movie>> = movieDao.getMovies()
 
-    fun insertMovie(movie: Movie): Completable = movieDao.insertMovie(movie)
+    fun insertMovie(movie: Movie): Single<Long> = movieDao.insertMovie(movie)
 
     fun deleteMovies(movies: List<Movie>): Completable = movieDao.deleteMovies(movies)
 

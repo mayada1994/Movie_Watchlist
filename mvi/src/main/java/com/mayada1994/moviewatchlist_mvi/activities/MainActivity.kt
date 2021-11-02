@@ -49,13 +49,12 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun selectMenuItemIntent(): Observable<Int> {
-        val observable = Observable.create<Int> { emitter ->
+        return Observable.create { emitter ->
             binding.navigationView.setOnItemSelectedListener { menuItem ->
                 emitter.onNext(menuItem.itemId)
                 true
             }
         }
-        return observable
     }
 
     private fun setMenu() {
