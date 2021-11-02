@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie Watchlist MVVM</string>
+    <string name="app_name">Movie Watchlist MVI</string>
 
     <!--region MainMenu-->
     <string name="watchlist_menu_item">Watchlist</string>
