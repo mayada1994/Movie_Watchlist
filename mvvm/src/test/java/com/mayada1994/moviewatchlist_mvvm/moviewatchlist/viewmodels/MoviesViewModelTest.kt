@@ -2,12 +2,12 @@ package com.mayada1994.moviewatchlist_mvvm.moviewatchlist.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.mayada1994.moviewatchlist_mvvm.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import com.mayada1994.moviewatchlist_mvvm.entities.TmbdResponse
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
+import com.mayada1994.moviewatchlist_mvvm.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.MoviesViewModel
@@ -118,7 +118,7 @@ class MoviesViewModelTest {
 
     /**
      * Given:
-     * - getPopularMovies in moviesRepository returns some TmbdResponse with empty list as results
+     * - getPopularMovies in moviesRepository throws exception
      * When:
      * - init is called with POPULAR as MovieType
      * Then should:

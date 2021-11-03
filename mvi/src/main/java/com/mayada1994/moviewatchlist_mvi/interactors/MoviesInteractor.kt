@@ -13,7 +13,13 @@ class MoviesInteractor(private val moviesRepository: MoviesRepository) {
         return when (movieType) {
             MovieType.POPULAR -> {
                 moviesRepository.getPopularMovies(1).toObservable()
-                    .map<MoviesState> { MoviesState.DataState(it.results) }
+                    .map {
+                        if (it.results.isNullOrEmpty()) {
+                            MoviesState.EmptyState
+                        } else {
+                            MoviesState.DataState(it.results)
+                        }
+                    }
                     .onErrorReturn {
                         MoviesState.ErrorState(R.string.general_error_message)
                     }
