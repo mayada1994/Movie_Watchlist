@@ -149,7 +149,7 @@ class WatchlistFragment : Fragment(), WatchlistView {
     }
 
     private fun renderNavigateToSearchScreenState() {
-//        (requireActivity() as MainActivity).setFragment(SearchFragment())
+        (requireActivity() as MainActivity).setFragment(SearchFragment())
     }
 
     private fun showPlaceholder(isVisible: Boolean) {
