@@ -23,6 +23,7 @@ class MoviesPresenter(private val moviesInteractor: MoviesInteractor) {
             compositeDisposable.dispose()
         }
     }
+
     private fun observeAddMovieToWatchlistIntent() = view.addMovieToWatchlistIntent()
         .doOnNext { Timber.d("Intent: add movie ${it.getMovieTitle()}") }
         .observeOn(Schedulers.io())

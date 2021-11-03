@@ -35,7 +35,7 @@ class MoviesFragment : Fragment(), MoviesView {
 
     private lateinit var presenter: MoviesPresenter
 
-    private val movieSubject: PublishSubject<Movie> = PublishSubject.create<Movie>()
+    private val movieSubject: PublishSubject<Movie> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,7 +4,6 @@ import com.mayada1994.moviewatchlist_mvi.db.MovieDao
 import com.mayada1994.moviewatchlist_mvi.entities.Movie
 import com.mayada1994.moviewatchlist_mvi.entities.TmbdResponse
 import com.mayada1994.moviewatchlist_mvi.services.MoviesService
-import io.reactivex.Completable
 import io.reactivex.Single
 
 class MoviesRepository(
@@ -19,7 +18,7 @@ class MoviesRepository(
 
     fun insertMovie(movie: Movie): Single<Long> = movieDao.insertMovie(movie)
 
-    fun deleteMovies(movies: List<Movie>): Completable = movieDao.deleteMovies(movies)
+    fun deleteMovies(movies: List<Movie>): Single<Unit> = movieDao.deleteMovies(movies)
 
     //endregion
 

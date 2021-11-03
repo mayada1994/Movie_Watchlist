@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.mayada1994.moviewatchlist_mvi.R
 import com.mayada1994.moviewatchlist_mvi.databinding.ActivityMainBinding
+import com.mayada1994.moviewatchlist_mvi.fragments.WatchlistFragment
 import com.mayada1994.moviewatchlist_mvi.interactors.MainInteractor
 import com.mayada1994.moviewatchlist_mvi.presenters.MainPresenter
 import com.mayada1994.moviewatchlist_mvi.states.MainState
@@ -60,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun setMenu() {
         with(binding) {
             navigationView.menu.getItem(selectedMenuItemId)?.isChecked = true
-//            setFragmentWithoutAddingToBackStack(WatchlistFragment())
+            setFragmentWithoutAddingToBackStack(WatchlistFragment())
         }
     }
 

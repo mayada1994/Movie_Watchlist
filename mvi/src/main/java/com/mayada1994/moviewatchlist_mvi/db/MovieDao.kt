@@ -2,7 +2,6 @@ package com.mayada1994.moviewatchlist_mvi.db
 
 import androidx.room.*
 import com.mayada1994.moviewatchlist_mvi.entities.Movie
-import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao
@@ -15,6 +14,6 @@ interface MovieDao {
     fun insertMovie(movie: Movie): Single<Long>
 
     @Delete
-    fun deleteMovies(movies: List<Movie>): Completable
+    fun deleteMovies(movies: List<Movie>): Single<Unit>
 
 }
