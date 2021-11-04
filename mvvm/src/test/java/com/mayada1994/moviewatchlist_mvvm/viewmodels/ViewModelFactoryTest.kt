@@ -1,10 +1,9 @@
-package com.mayada1994.moviewatchlist_mvvm.moviewatchlist.viewmodels
+package com.mayada1994.moviewatchlist_mvvm.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.ViewModel
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_mvvm.rules.RxImmediateSchedulerRule
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.*
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import org.junit.After

@@ -1,15 +1,13 @@
-package com.mayada1994.moviewatchlist_mvvm.moviewatchlist.viewmodels
+package com.mayada1994.moviewatchlist_mvvm.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.mayada1994.moviewatchlist_mvvm.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvvm.fragments.WatchlistFragment
 import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.MainViewModel
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import org.junit.After
 import org.junit.Before

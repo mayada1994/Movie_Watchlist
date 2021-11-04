@@ -1,6 +1,5 @@
-package com.mayada1994.moviewatchlist_mvvm.moviewatchlist.entities
+package com.mayada1994.moviewatchlist_mvvm.entities
 
-import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

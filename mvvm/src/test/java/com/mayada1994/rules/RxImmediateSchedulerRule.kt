@@ -1,4 +1,4 @@
-package com.mayada1994.moviewatchlist_mvvm.rules
+package com.mayada1994.rules
 
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
