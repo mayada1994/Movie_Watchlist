@@ -138,7 +138,7 @@ class MoviesFragment : Fragment(), MoviesView {
     }
 
     private fun showProgress(isProgressVisible: Boolean) {
-        (requireActivity() as MainActivity).showProgress(isProgressVisible)
+        (activity as MainActivity?)?.showProgress(isProgressVisible)
     }
 
     private fun showToast(resId: Int) {
