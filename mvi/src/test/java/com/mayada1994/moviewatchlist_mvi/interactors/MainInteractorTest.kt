@@ -1,11 +1,10 @@
-package com.mayada1994.moviewatchlist_mvi.moviewatchlist.interactors
+package com.mayada1994.moviewatchlist_mvi.interactors
 
 import com.mayada1994.moviewatchlist_mvi.R
 import com.mayada1994.moviewatchlist_mvi.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_mvi.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_mvi.interactors.MainInteractor
-import com.mayada1994.moviewatchlist_mvi.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvi.states.MainState
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Before

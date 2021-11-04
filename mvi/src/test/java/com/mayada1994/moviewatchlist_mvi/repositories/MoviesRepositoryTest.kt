@@ -1,11 +1,10 @@
-package com.mayada1994.moviewatchlist_mvi.moviewatchlist.repositories
+package com.mayada1994.moviewatchlist_mvi.repositories
 
 import com.mayada1994.moviewatchlist_mvi.db.MovieDao
 import com.mayada1994.moviewatchlist_mvi.entities.Movie
 import com.mayada1994.moviewatchlist_mvi.entities.TmbdResponse
-import com.mayada1994.moviewatchlist_mvi.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_mvi.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvi.services.MoviesService
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
