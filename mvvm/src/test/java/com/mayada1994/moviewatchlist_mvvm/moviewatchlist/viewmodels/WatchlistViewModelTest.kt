@@ -80,7 +80,7 @@ class WatchlistViewModelTest {
 
     /**
      * Given:
-     * - getMovies in moviesRepository returns some list of movies from DB
+     * - getMovies in moviesRepository returns empty list of movies from DB
      * When:
      * - init is called
      * Then should:
@@ -112,7 +112,6 @@ class WatchlistViewModelTest {
     /**
      * Given:
      * - getMovies in moviesRepository throws exception
-     * - getMovies in moviesRepository returns some list of movies from DB
      * When:
      * - init is called
      * Then should:
