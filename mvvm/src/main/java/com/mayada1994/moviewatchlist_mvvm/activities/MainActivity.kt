@@ -13,9 +13,7 @@ import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.databinding.ActivityMainBinding
 import com.mayada1994.moviewatchlist_mvvm.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvvm.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel.BaseEvent
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.MainViewModel
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.MainViewModel.MainEvent
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,16 +42,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObservers() {
-        viewModel.event.observe(this, Observer { event ->
-            when (event) {
-                is MainEvent.ShowSelectedScreen -> showSelectedScreen(
-                    event.fragmentClass,
-                    event.args,
-                    event.selectedMenuItemId
-                )
+        viewModel.selectedScreen.observe(this, Observer { selectedScreen ->
+            showSelectedScreen(
+                selectedScreen.fragmentClass,
+                selectedScreen.args,
+                selectedScreen.selectedMenuItemId
+            )
+        })
 
-                is BaseEvent.ShowMessage -> showToast(event.resId)
-            }
+        viewModel.toastMessageStringResId.observe(this, Observer { resId ->
+            showToast(resId)
         })
     }
 

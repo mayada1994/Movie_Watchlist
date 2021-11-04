@@ -3,10 +3,10 @@ package com.mayada1994.moviewatchlist_mvvm.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_mvvm.R
+import com.mayada1994.moviewatchlist_mvvm.entities.SelectedScreen
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvvm.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import org.junit.After
@@ -22,15 +22,18 @@ class MainViewModelTest {
 
     @get:Rule var rule: TestRule = InstantTaskExecutorRule()
 
-    private val observerViewEvent: Observer<ViewEvent> = mockk()
+    private val observerSelectedScreen: Observer<SelectedScreen> = mockk()
+    private val observerToastMessageStringResId: Observer<Int> = mockk()
 
     private lateinit var mainViewModel: MainViewModel
 
     @Before
     fun setup() {
         mainViewModel = MainViewModel()
-        mainViewModel.event.observeForever(observerViewEvent)
-        every { observerViewEvent.onChanged(any()) } just Runs
+        mainViewModel.selectedScreen.observeForever(observerSelectedScreen)
+        mainViewModel.toastMessageStringResId.observeForever(observerToastMessageStringResId)
+        every { observerSelectedScreen.onChanged(any()) } just Runs
+        every { observerToastMessageStringResId.onChanged(any()) } just Runs
     }
 
     @After
@@ -42,7 +45,7 @@ class MainViewModelTest {
      * When:
      * - onMenuItemSelected is called with R.id.watchlist_menu_item as itemId
      * Then should:
-     * - call setEvent in mainViewModel with ShowSelectedScreen where fragment class is WatchlistFragment and selectedMenuItemId is 0
+     * - post selectedScreen in mainViewModel with SelectedScreen where fragment class is WatchlistFragment and selectedMenuItemId is 0
      */
     @Test
     fun check_onMenuItemSelected_WatchlistFragment() {
@@ -55,8 +58,8 @@ class MainViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+            observerSelectedScreen.onChanged(
+                SelectedScreen(
                     fragmentClass = fragmentClass,
                     selectedMenuItemId = 0
                 )
@@ -68,7 +71,7 @@ class MainViewModelTest {
      * When:
      * - onMenuItemSelected is called with R.id.popular_menu_item as itemId
      * Then should:
-     * - call setEvent in mainViewModel with ShowSelectedScreen where fragment class is MoviesFragment, argument is MovieType.POPULAR and selectedMenuItemId is 1
+     * - post selectedScreen in mainViewModel with SelectedScreen where fragment class is MoviesFragment, argument is MovieType.POPULAR and selectedMenuItemId is 1
      */
     @Test
     fun check_onMenuItemSelected_MoviesFragment_Popular() {
@@ -82,8 +85,8 @@ class MainViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+            observerSelectedScreen.onChanged(
+                SelectedScreen(
                     fragmentClass = fragmentClass,
                     args = MoviesFragment.MOVIE_TYPE to movieType,
                     selectedMenuItemId = 1
@@ -96,7 +99,7 @@ class MainViewModelTest {
      * When:
      * - onMenuItemSelected is called with R.id.upcoming_menu_item as itemId
      * Then should:
-     * - call setEvent in mainViewModel with ShowSelectedScreen where fragment class is MoviesFragment, argument is MovieType.UPCOMING and selectedMenuItemId is 2
+     * - post selectedScreen in mainViewModel with SelectedScreen where fragment class is MoviesFragment, argument is MovieType.UPCOMING and selectedMenuItemId is 2
      */
     @Test
     fun check_onMenuItemSelected_MoviesFragment_Upcoming() {
@@ -110,8 +113,8 @@ class MainViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+            observerSelectedScreen.onChanged(
+                SelectedScreen(
                     fragmentClass = fragmentClass,
                     args = MoviesFragment.MOVIE_TYPE to movieType,
                     selectedMenuItemId = 2
@@ -124,7 +127,7 @@ class MainViewModelTest {
      * When:
      * - onMenuItemSelected is called with other itemId
      * Then should:
-     * - call setEvent in mainViewModel with ShowMessage where resId is R.string.general_error_message
+     * - post  toastMessageStringResId in mainViewModel with resId as R.string.general_error_message
      */
     @Test
     fun check_onMenuItemSelected_Other() {
@@ -136,8 +139,8 @@ class MainViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(
-                BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message)
+            observerToastMessageStringResId.onChanged(
+                R.string.general_error_message
             )
         }
     }
