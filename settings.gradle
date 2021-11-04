@@ -10,3 +10,4 @@ rootProject.name = "Movie Watchlist"
 include ':mvc'
 include ':mvp'
 include ':mvvm'
+include ':mvi'
