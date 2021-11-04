@@ -41,6 +41,7 @@ class MoviesViewModelTest {
 
     @After
     fun clear() {
+        moviesViewModel.onDestroy()
         unmockkAll()
     }
 

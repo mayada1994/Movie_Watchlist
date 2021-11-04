@@ -40,6 +40,7 @@ class WatchlistViewModelTest {
 
     @After
     fun clear() {
+        watchlistViewModel.onDestroy()
         unmockkAll()
     }
 

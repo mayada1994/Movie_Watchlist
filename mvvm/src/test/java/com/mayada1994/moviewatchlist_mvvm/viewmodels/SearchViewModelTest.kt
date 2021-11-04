@@ -41,6 +41,7 @@ class SearchViewModelTest {
 
     @After
     fun clear() {
+        searchViewModel.onDestroy()
         unmockkAll()
     }
 
