@@ -1,11 +1,10 @@
-package com.mayada1994.moviewatchlist_mvp.moviewatchlist.presenters
+package com.mayada1994.moviewatchlist_mvp.presenters
 
 import com.mayada1994.moviewatchlist_mvp.R
 import com.mayada1994.moviewatchlist_mvp.contracts.MainContract
 import com.mayada1994.moviewatchlist_mvp.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_mvp.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_mvp.presenters.MainPresenter
-import com.mayada1994.moviewatchlist_mvp.rules.RxImmediateSchedulerRule
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import org.junit.After
 import org.junit.Before

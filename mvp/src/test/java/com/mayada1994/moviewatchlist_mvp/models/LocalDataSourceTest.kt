@@ -1,9 +1,8 @@
-package com.mayada1994.moviewatchlist_mvp.moviewatchlist.models
+package com.mayada1994.moviewatchlist_mvp.models
 
 import com.mayada1994.moviewatchlist_mvp.db.MovieDao
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
-import com.mayada1994.moviewatchlist_mvp.models.LocalDataSource
-import com.mayada1994.moviewatchlist_mvp.rules.RxImmediateSchedulerRule
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

@@ -1,10 +1,9 @@
-package com.mayada1994.moviewatchlist_mvp.moviewatchlist.models
+package com.mayada1994.moviewatchlist_mvp.models
 
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
 import com.mayada1994.moviewatchlist_mvp.entities.TmbdResponse
-import com.mayada1994.moviewatchlist_mvp.models.RemoteDataSource
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvp.services.MoviesService
-import com.mayada1994.moviewatchlist_mvp.rules.RxImmediateSchedulerRule
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

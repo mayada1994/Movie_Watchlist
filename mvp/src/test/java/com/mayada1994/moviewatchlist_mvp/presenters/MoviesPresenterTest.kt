@@ -1,4 +1,4 @@
-package com.mayada1994.moviewatchlist_mvp.moviewatchlist.presenters
+package com.mayada1994.moviewatchlist_mvp.presenters
 
 import com.mayada1994.moviewatchlist_mvp.R
 import com.mayada1994.moviewatchlist_mvp.contracts.MoviesContract
@@ -7,8 +7,7 @@ import com.mayada1994.moviewatchlist_mvp.entities.TmbdResponse
 import com.mayada1994.moviewatchlist_mvp.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvp.models.LocalDataSource
 import com.mayada1994.moviewatchlist_mvp.models.RemoteDataSource
-import com.mayada1994.moviewatchlist_mvp.presenters.MoviesPresenter
-import com.mayada1994.moviewatchlist_mvp.rules.RxImmediateSchedulerRule
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
 import io.reactivex.Single
