@@ -8,7 +8,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.databinding.ActivityMainBinding
 import com.mayada1994.moviewatchlist_mvvm.di.WatchlistComponent
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObservers() {
-        viewModel.selectedScreen.observe(this, Observer { selectedScreen ->
+        viewModel.selectedScreen.observe(this, { selectedScreen ->
             showSelectedScreen(
                 selectedScreen.fragmentClass,
                 selectedScreen.args,
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             )
         })
 
-        viewModel.toastMessageStringResId.observe(this, Observer { resId ->
+        viewModel.toastMessageStringResId.observe(this, { resId ->
             showToast(resId)
         })
     }

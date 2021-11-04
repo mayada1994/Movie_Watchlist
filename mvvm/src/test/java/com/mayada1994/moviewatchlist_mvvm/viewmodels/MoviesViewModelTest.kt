@@ -7,7 +7,6 @@ import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import com.mayada1994.moviewatchlist_mvvm.entities.TmbdResponse
 import com.mayada1994.moviewatchlist_mvvm.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
@@ -26,7 +25,10 @@ class MoviesViewModelTest {
 
     @get:Rule var rule: TestRule = InstantTaskExecutorRule()
 
-    private val observerViewEvent: Observer<ViewEvent> = mockk()
+    private val observerMoviesList: Observer<List<Movie>> = mockk()
+    private val observerIsProgressVisible: Observer<Boolean> = mockk()
+    private val observerIsPlaceholderVisible: Observer<Boolean> = mockk()
+    private val observerToastMessageStringResId: Observer<Int> = mockk()
 
     private val moviesRepository: MoviesRepository = mockk()
 
@@ -35,8 +37,14 @@ class MoviesViewModelTest {
     @Before
     fun setup() {
         moviesViewModel = MoviesViewModel(moviesRepository)
-        moviesViewModel.event.observeForever(observerViewEvent)
-        every { observerViewEvent.onChanged(any()) } just Runs
+        moviesViewModel.moviesList.observeForever(observerMoviesList)
+        moviesViewModel.isProgressVisible.observeForever(observerIsProgressVisible)
+        moviesViewModel.isPlaceholderVisible.observeForever(observerIsPlaceholderVisible)
+        moviesViewModel.toastMessageStringResId.observeForever(observerToastMessageStringResId)
+        every { observerMoviesList.onChanged(any()) } just Runs
+        every { observerIsProgressVisible.onChanged(any()) } just Runs
+        every { observerIsPlaceholderVisible.onChanged(any()) } just Runs
+        every { observerToastMessageStringResId.onChanged(any()) } just Runs
     }
 
     @After
@@ -51,8 +59,8 @@ class MoviesViewModelTest {
      * When:
      * - init is called with POPULAR as MovieType
      * Then should:
-     * - call setEvent with SetMoviesList in moviesViewModel with list of movies from given TmbdResponse
-     * - call setEvent with ShowPlaceholder in moviesViewModel with false as isVisible
+     * - post moviesList in moviesViewModel with list of movies from given TmbdResponse
+     * - post isPlaceholderVisible in moviesViewModel with false as isVisible
      */
     @Test
     fun check_init_Popular() {
@@ -73,11 +81,11 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getPopularMovies(1)
-            observerViewEvent.onChanged(MoviesViewModel.MoviesEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerMoviesList.onChanged(movies)
+            observerIsPlaceholderVisible.onChanged(false)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -87,8 +95,8 @@ class MoviesViewModelTest {
      * When:
      * - init is called with POPULAR as MovieType
      * Then should:
-     * - not call setEvent with SetMoviesList in moviesViewModel
-     * - call setEvent with ShowPlaceholder in moviesViewModel with true as isVisible
+     * - not post moviesList in moviesViewModel
+     * - post isPlaceholderVisible in moviesViewModel with true as isVisible
      */
     @Test
     fun check_init_Popular_emptyMoviesList() {
@@ -106,13 +114,13 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getPopularMovies(1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerIsProgressVisible.onChanged(false)
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(MoviesViewModel.MoviesEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerMoviesList.onChanged(movies) }
     }
 
     /**
@@ -122,8 +130,8 @@ class MoviesViewModelTest {
      * - init is called with POPULAR as MovieType
      * Then should:
      * - not call setEvent with SetMoviesList in moviesViewModel
-     * - call setEvent with ShowPlaceholder in moviesViewModel with true as isVisible
-     * - call setEvent with ShowMessage in moviesViewModel with R.string.general_error_message as resId
+     * - post isPlaceholderVisible in moviesViewModel with true as isVisible
+     * - post toastMessageStringResId in moviesViewModel with R.string.general_error_message
      */
     @Test
     fun check_init_Popular_error() {
@@ -139,11 +147,11 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getPopularMovies(1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -153,8 +161,8 @@ class MoviesViewModelTest {
      * When:
      * - init is called with UPCOMING as MovieType
      * Then should:
-     * - call setEvent with SetMoviesList in moviesViewModel with list of movies from given TmbdResponse
-     * - call setEvent with ShowPlaceholder in moviesViewModel with false as isVisible
+     * - post moviesList in moviesViewModel with list of movies from given TmbdResponse
+     * - post isPlaceholderVisible in moviesViewModel with false as isVisible
      */
     @Test
     fun check_init_Upcoming() {
@@ -175,11 +183,11 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getUpcomingMovies(1)
-            observerViewEvent.onChanged(MoviesViewModel.MoviesEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerMoviesList.onChanged(movies)
+            observerIsPlaceholderVisible.onChanged(false)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -189,8 +197,8 @@ class MoviesViewModelTest {
      * When:
      * - init is called with UPCOMING as MovieType
      * Then should:
-     * - not call setEvent with SetMoviesList in moviesViewModel
-     * - call setEvent with ShowPlaceholder in moviesViewModel with true as isVisible
+     * - not post moviesList in moviesViewModel
+     * - post isPlaceholderVisible in moviesViewModel with true as isVisible
      */
     @Test
     fun check_init_Upcoming_emptyMoviesList() {
@@ -208,13 +216,13 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getUpcomingMovies(1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerIsProgressVisible.onChanged(false)
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(MoviesViewModel.MoviesEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerMoviesList.onChanged(movies) }
     }
 
     /**
@@ -223,9 +231,9 @@ class MoviesViewModelTest {
      * When:
      * - init is called with UPCOMING as MovieType
      * Then should:
-     * - not setEvent with SetMoviesList in moviesViewModel
-     * - call setEvent with ShowPlaceholder in moviesViewModel with true as isVisible
-     * - call setEvent with ShowMessage in moviesViewModel with R.string.general_error_message as resId
+     * - not post moviesList in moviesViewModel
+     * - post isPlaceholderVisible in moviesViewModel with true as isVisible
+     * - post toastMessageStringResId in moviesViewModel with R.string.general_error_message
      */
     @Test
     fun check_init_Upcoming_error() {
@@ -241,11 +249,11 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getUpcomingMovies(1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -253,7 +261,7 @@ class MoviesViewModelTest {
      * When:
      * - addMovieToWatchlist is called with some movie
      * Then should:
-     * - call setEvent with ShowMessage with R.string.movie_added_to_watchlist_message as resId
+     * - post toastMessageStringResId with R.string.movie_added_to_watchlist_message
      */
     @Test
     fun check_addMovieToWatchlist() {
@@ -267,10 +275,10 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movie_added_to_watchlist_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.movie_added_to_watchlist_message)
+            observerIsProgressVisible.onChanged(false)
         }
 
     }
@@ -281,7 +289,7 @@ class MoviesViewModelTest {
      * When:
      * - addMovieToWatchlist is called with some movie
      * Then should:
-     * - call setEvent with ShowMessage with with R.string.general_error_message as resId
+     * - post toastMessageStringResId with R.string.general_error_message
      */
     @Test
     fun check_addMovieToWatchlist_error() {
@@ -297,10 +305,10 @@ class MoviesViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsProgressVisible.onChanged(false)
         }
 
     }

@@ -281,7 +281,7 @@ class MoviesViewModelTest {
      * When:
      * - addMovieToWatchlist is called with some movie
      * Then should:
-     * - call setEvent with ShowMessage with with R.string.general_error_message as resId
+     * - call setEvent with ShowMessage with R.string.general_error_message as resId
      */
     @Test
     fun check_addMovieToWatchlist_error() {
