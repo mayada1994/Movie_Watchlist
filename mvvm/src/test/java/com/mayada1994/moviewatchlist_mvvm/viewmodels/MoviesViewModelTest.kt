@@ -129,7 +129,7 @@ class MoviesViewModelTest {
      * When:
      * - init is called with POPULAR as MovieType
      * Then should:
-     * - not call setEvent with SetMoviesList in moviesViewModel
+     * - not post moviesList in moviesViewModel
      * - post isPlaceholderVisible in moviesViewModel with true as isVisible
      * - post toastMessageStringResId in moviesViewModel with R.string.general_error_message
      */
