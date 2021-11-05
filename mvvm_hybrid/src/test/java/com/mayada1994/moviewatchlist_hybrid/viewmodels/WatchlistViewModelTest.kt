@@ -368,7 +368,7 @@ class WatchlistViewModelTest {
      * When:
      * - deleteMovies is called with selectedMovies
      * Then should:
-     * - call setEvent with DeleteMovies in moviesRepository with selectedMovies to delete movies from DB
+     * - call deleteMovies in moviesRepository with selectedMovies to delete movies from DB
      * - call setEvent with UpdateMovies in watchlistViewModel with selectedMovies
      * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add as resId
      */

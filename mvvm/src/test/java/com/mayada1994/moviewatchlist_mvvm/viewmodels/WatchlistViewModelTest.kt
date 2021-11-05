@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
@@ -25,7 +24,14 @@ class WatchlistViewModelTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val observerViewEvent: Observer<ViewEvent> = mockk()
+    private val observerMoviesList: Observer<List<Movie>> = mockk()
+    private val observerFloatingActionButtonImage: Observer<Int> = mockk()
+    private val observerNavigateToSearchScreen: Observer<Boolean> = mockk()
+    private val observerShowDeleteMoviesDialog: Observer<Boolean> = mockk()
+    private val observerUpdateMoviesList: Observer<List<Movie>> = mockk()
+    private val observerIsProgressVisible: Observer<Boolean> = mockk()
+    private val observerIsPlaceholderVisible: Observer<Boolean> = mockk()
+    private val observerToastMessageStringResId: Observer<Int> = mockk()
 
     private val moviesRepository: MoviesRepository = mockk()
 
@@ -34,8 +40,22 @@ class WatchlistViewModelTest {
     @Before
     fun setup() {
         watchlistViewModel = WatchlistViewModel(moviesRepository)
-        watchlistViewModel.event.observeForever(observerViewEvent)
-        every { observerViewEvent.onChanged(any()) } just Runs
+        watchlistViewModel.moviesList.observeForever(observerMoviesList)
+        watchlistViewModel.floatingActionButtonImage.observeForever(observerFloatingActionButtonImage)
+        watchlistViewModel.navigateToSearchScreen.observeForever(observerNavigateToSearchScreen)
+        watchlistViewModel.showDeleteMoviesDialog.observeForever(observerShowDeleteMoviesDialog)
+        watchlistViewModel.updateMoviesList.observeForever(observerUpdateMoviesList)
+        watchlistViewModel.isProgressVisible.observeForever(observerIsProgressVisible)
+        watchlistViewModel.isPlaceholderVisible.observeForever(observerIsPlaceholderVisible)
+        watchlistViewModel.toastMessageStringResId.observeForever(observerToastMessageStringResId)
+        every { observerMoviesList.onChanged(any()) } just Runs
+        every { observerFloatingActionButtonImage.onChanged(any()) } just Runs
+        every { observerNavigateToSearchScreen.onChanged(any()) } just Runs
+        every { observerShowDeleteMoviesDialog.onChanged(any()) } just Runs
+        every { observerUpdateMoviesList.onChanged(any()) } just Runs
+        every { observerIsProgressVisible.onChanged(any()) } just Runs
+        every { observerIsPlaceholderVisible.onChanged(any()) } just Runs
+        every { observerToastMessageStringResId.onChanged(any()) } just Runs
     }
 
     @After
@@ -51,8 +71,8 @@ class WatchlistViewModelTest {
      * - init is called
      * Then should:
      * - call getMovies in moviesRepository to get some list of movies from DB
-     * - call setEvent with SetMoviesList in watchlistViewModel with list of movies returned from DB
-     * - call setEvent with ShowPlaceholder in watchlistViewModel with false as isVisible
+     * - post moviesList in watchlistViewModel with list of movies returned from DB
+     * - post isPlaceholderVisible in watchlistViewModel with false as isVisible
      */
     @Test
     fun check_init() {
@@ -69,11 +89,11 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerMoviesList.onChanged(movies)
+            observerIsPlaceholderVisible.onChanged(false)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -84,8 +104,8 @@ class WatchlistViewModelTest {
      * - init is called
      * Then should:
      * - call getMovies in moviesRepository to get some list of movies from DB
-     * - not call setEvent with SetMoviesList in watchlistViewModel
-     * - call setEvent with ShowPlaceholder in watchlistViewModel with true as isVisible
+     * - not post moviesList in watchlistViewModel
+     * - post isPlaceholderVisible in watchlistViewModel with true as isVisible
      */
     @Test
     fun check_init_emptyList() {
@@ -99,13 +119,13 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerIsProgressVisible.onChanged(false)
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerMoviesList.onChanged(movies) }
     }
 
     /**
@@ -115,8 +135,8 @@ class WatchlistViewModelTest {
      * - init is called
      * Then should:
      * - call getMovies in moviesRepository to get some list of movies from DB
-     * - not call setEvent with SetMoviesList in watchlistViewModel
-     * - call setEvent with ShowPlaceholder in watchlistViewModel with true as isVisible
+     * - not post moviesList in watchlistViewModel
+     * - post isPlaceholderVisible in watchlistViewModel with true as isVisible
      */
     @Test
     fun check_init_error() {
@@ -130,10 +150,10 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsPlaceholderVisible.onChanged(true)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -143,7 +163,7 @@ class WatchlistViewModelTest {
      * When:
      * - init is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete
      */
     @Test
     fun check_init_fab() {
@@ -162,7 +182,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_delete)
         }
     }
 
@@ -172,7 +192,7 @@ class WatchlistViewModelTest {
      * When:
      * - init is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add
      */
     @Test
     fun check_init_fab_emptyList() {
@@ -189,7 +209,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_input_add)
         }
     }
 
@@ -200,7 +220,7 @@ class WatchlistViewModelTest {
      * When:
      * - init is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete
      */
     @Test
     fun check_init_error_fab() {
@@ -216,7 +236,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_delete)
         }
     }
 
@@ -227,7 +247,7 @@ class WatchlistViewModelTest {
      * When:
      * - init is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add
      */
     @Test
     fun check_init_error_fab_emptyList() {
@@ -241,7 +261,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_input_add)
         }
     }
 
@@ -251,7 +271,7 @@ class WatchlistViewModelTest {
      * When:
      * - onMovieItemChecked is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_delete
      */
     @Test
     fun check_onMovieItemChecked() {
@@ -260,7 +280,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_delete)
         }
     }
 
@@ -270,7 +290,7 @@ class WatchlistViewModelTest {
      * When:
      * - onMovieItemChecked is called
      * Then should:
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add as resId
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add
      */
     @Test
     fun check_onMovieItemChecked_emptyList() {
@@ -279,7 +299,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_input_add)
         }
     }
 
@@ -289,7 +309,7 @@ class WatchlistViewModelTest {
      * When:
      * - checkMoviesList is called
      * Then should:
-     * - call setEvent with ShowPlaceholder in watchlistViewModel with false as isVisible
+     * - post isPlaceholderVisible in watchlistViewModel with false as isVisible
      */
     @Test
     fun check_checkMoviesList() {
@@ -298,7 +318,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
+            observerIsPlaceholderVisible.onChanged(false)
         }
     }
 
@@ -308,7 +328,7 @@ class WatchlistViewModelTest {
      * When:
      * - checkMoviesList is called
      * Then should:
-     * - call setEvent with ShowPlaceholder in watchlistViewModel with true as isVisible
+     * - post isPlaceholderVisible in watchlistViewModel with true as isVisible
      */
     @Test
     fun check_checkMoviesList_emptyList() {
@@ -317,7 +337,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
+            observerIsPlaceholderVisible.onChanged(true)
         }
     }
 
@@ -327,7 +347,7 @@ class WatchlistViewModelTest {
      * When:
      * - onFloatingActionButtonClick is called
      * Then should:
-     * - call setEvent with ShowDeleteMoviesDialog in watchlistViewModel
+     * - post showDeleteMoviesDialog in watchlistViewModel
      */
     @Test
     fun check_onFloatingActionButtonClick() {
@@ -339,7 +359,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.ShowDeleteMoviesDialog)
+            observerShowDeleteMoviesDialog.onChanged(any())
         }
     }
 
@@ -349,7 +369,7 @@ class WatchlistViewModelTest {
      * When:
      * - checkMoviesList is called
      * Then should:
-     * - call setEvent with GoToSearchScreen in watchlistViewModel with true as isVisible
+     * - post navigateToSearchScreen in watchlistViewModel
      */
     @Test
     fun check_onFloatingActionButtonClick_emptyList() {
@@ -358,7 +378,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.GoToSearchScreen)
+            observerNavigateToSearchScreen.onChanged(any())
         }
     }
 
@@ -368,9 +388,9 @@ class WatchlistViewModelTest {
      * When:
      * - deleteMovies is called with selectedMovies
      * Then should:
-     * - call setEvent with DeleteMovies in moviesRepository with selectedMovies to delete movies from DB
-     * - call setEvent with UpdateMovies in watchlistViewModel with selectedMovies
-     * - call setEvent with SetFloatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add as resId
+     * - call deleteMovies in moviesRepository with selectedMovies to delete movies from DB
+     * - post updateMoviesList in watchlistViewModel with selectedMovies
+     * - post floatingActionButtonImage in watchlistViewModel with android.R.drawable.ic_input_add
      */
     @Test
     fun check_deleteMovies() {
@@ -386,12 +406,12 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_delete)
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.deleteMovies(movies)
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.UpdateMovies(movies))
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerUpdateMoviesList.onChanged(movies)
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_input_add)
+            observerIsProgressVisible.onChanged(false)
         }
 
     }
@@ -403,7 +423,7 @@ class WatchlistViewModelTest {
      * When:
      * - deleteMovies is called with selectedMovies
      * Then should:
-     * - call setEvent with ShowMessage in watchlistViewModel with R.string.general_error_message as resId
+     * - post toastMessageStringResId in watchlistViewModel with R.string.general_error_message
      */
     @Test
     fun check_deleteMovies_error() {
@@ -421,11 +441,11 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerFloatingActionButtonImage.onChanged(android.R.drawable.ic_delete)
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.deleteMovies(movies)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsProgressVisible.onChanged(false)
         }
 
     }
@@ -436,7 +456,7 @@ class WatchlistViewModelTest {
      * When:
      * - deleteMovies is called with selectedMovies
      * Then should:
-     * - call setEvent with ShowMessage in watchlistViewModel with R.string.movie_deleted_message as resId
+     * - post toastMessageStringResId in watchlistViewModel with R.string.movie_deleted_message
      */
     @Test
     fun check_deleteMovies_selectedMovies_singleElement() {
@@ -452,7 +472,7 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movie_deleted_message))
+            observerToastMessageStringResId.onChanged(R.string.movie_deleted_message)
         }
     }
 
@@ -462,7 +482,7 @@ class WatchlistViewModelTest {
      * When:
      * - deleteMovies is called with selectedMovies
      * Then should:
-     * - call setEvent with ShowMessage in watchlistViewModel with R.string.movies_deleted_message as resId
+     * - post toastMessageStringResId in watchlistViewModel with R.string.movies_deleted_message
      */
     @Test
     fun check_deleteMovies_selectedMovies_multipleElements() {
@@ -480,7 +500,7 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movies_deleted_message))
+            observerToastMessageStringResId.onChanged(R.string.movies_deleted_message)
         }
     }
 
