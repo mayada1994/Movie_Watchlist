@@ -24,9 +24,7 @@ import com.mayada1994.moviewatchlist_mvvm.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist_mvvm.databinding.FragmentSearchBinding
 import com.mayada1994.moviewatchlist_mvvm.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.SearchViewModel
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.SearchViewModel.SearchEvent
 
 class SearchFragment : Fragment() {
 
@@ -50,20 +48,28 @@ class SearchFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when(event) {
-                is SearchEvent.SetMoviesList -> setMoviesList(event.movies)
+        viewModel.moviesList.observe(viewLifecycleOwner, { movies ->
+            setMoviesList(movies)
+        })
 
-                is SearchEvent.ShowEmptySearchResult -> showEmptySearchResult(event.isVisible)
+        viewModel.isEmptySearchResultVisible.observe(viewLifecycleOwner, { isVisible ->
+            showEmptySearchResult(isVisible)
+        })
 
-                is SearchEvent.ClearMovieList -> clearMovieList()
+        viewModel.clearMoviesList.observe(viewLifecycleOwner, {
+            clearMovieList()
+        })
 
-                is BaseViewModel.BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
+        viewModel.isProgressVisible.observe(viewLifecycleOwner, { isProgressVisible ->
+            showProgress(isProgressVisible)
+        })
 
-                is BaseViewModel.BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
+        viewModel.isPlaceholderVisible.observe(viewLifecycleOwner, { isPlaceholderVisible ->
+            showPlaceholder(isPlaceholderVisible)
+        })
 
-                is BaseViewModel.BaseEvent.ShowMessage -> showToast(event.resId)
-            }
+        viewModel.toastMessageStringResId.observe(viewLifecycleOwner, { resId ->
+            showToast(resId)
         })
     }
 

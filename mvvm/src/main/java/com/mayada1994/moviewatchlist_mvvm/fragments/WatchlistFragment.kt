@@ -16,9 +16,7 @@ import com.mayada1994.moviewatchlist_mvvm.databinding.DialogEditWatchlistBinding
 import com.mayada1994.moviewatchlist_mvvm.databinding.FragmentWatchlistBinding
 import com.mayada1994.moviewatchlist_mvvm.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.BaseViewModel
 import com.mayada1994.moviewatchlist_mvvm.viewmodels.WatchlistViewModel
-import com.mayada1994.moviewatchlist_mvvm.viewmodels.WatchlistViewModel.WatchlistEvent
 
 class WatchlistFragment : Fragment() {
 
@@ -52,24 +50,36 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.event.observe(viewLifecycleOwner, { event ->
-            when(event) {
-                is WatchlistEvent.SetMoviesList -> setMoviesList(event.movies)
+        viewModel.moviesList.observe(viewLifecycleOwner, { movies ->
+            setMoviesList(movies)
+        })
 
-                is WatchlistEvent.SetFloatingActionButtonImage -> setFloatingActionButtonImage(event.resId)
+        viewModel.floatingActionButtonImage.observe(viewLifecycleOwner, { resId ->
+            setFloatingActionButtonImage(resId)
+        })
 
-                is WatchlistEvent.GoToSearchScreen -> goToSearchScreen()
+        viewModel.navigateToSearchScreen.observe(viewLifecycleOwner, {
+            goToSearchScreen()
+        })
 
-                is WatchlistEvent.ShowDeleteMoviesDialog -> showDeleteMoviesDialog()
+        viewModel.showDeleteMoviesDialog.observe(viewLifecycleOwner, {
+            showDeleteMoviesDialog()
+        })
 
-                is WatchlistEvent.UpdateMovies -> updateMovies(event.movies)
+        viewModel.updateMoviesList.observe(viewLifecycleOwner, { movies ->
+            updateMovies(movies)
+        })
 
-                is BaseViewModel.BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
+        viewModel.isProgressVisible.observe(viewLifecycleOwner, { isProgressVisible ->
+            showProgress(isProgressVisible)
+        })
 
-                is BaseViewModel.BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
+        viewModel.isPlaceholderVisible.observe(viewLifecycleOwner, { isPlaceholderVisible ->
+            showPlaceholder(isPlaceholderVisible)
+        })
 
-                is BaseViewModel.BaseEvent.ShowMessage -> showToast(event.resId)
-            }
+        viewModel.toastMessageStringResId.observe(viewLifecycleOwner, { resId ->
+            showToast(resId)
         })
     }
 

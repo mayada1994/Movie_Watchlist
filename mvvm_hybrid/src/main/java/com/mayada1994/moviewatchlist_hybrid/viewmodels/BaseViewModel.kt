@@ -1,10 +1,10 @@
-package com.mayada1994.moviewatchlist_mvvm.viewmodels
+package com.mayada1994.moviewatchlist_hybrid.viewmodels
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.mayada1994.moviewatchlist_mvvm.utils.SingleLiveEvent
-import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
+import com.mayada1994.moviewatchlist_hybrid.utils.SingleLiveEvent
+import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 
 abstract class BaseViewModel: ViewModel() {
 

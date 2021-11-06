@@ -1,3 +1,0 @@
-package com.mayada1994.moviewatchlist_mvvm.utils
-
-interface ViewEvent

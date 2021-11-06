@@ -6,7 +6,6 @@ import com.mayada1994.moviewatchlist_mvvm.R
 import com.mayada1994.moviewatchlist_mvvm.entities.Movie
 import com.mayada1994.moviewatchlist_mvvm.entities.TmbdResponse
 import com.mayada1994.moviewatchlist_mvvm.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_mvvm.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
@@ -26,7 +25,12 @@ class SearchViewModelTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private val observerViewEvent: Observer<ViewEvent> = mockk()
+    private val observerMoviesList: Observer<List<Movie>> = mockk()
+    private val observerIsProgressVisible: Observer<Boolean> = mockk()
+    private val observerIsEmptySearchResultVisible: Observer<Boolean> = mockk()
+    private val observerIsPlaceholderVisible: Observer<Boolean> = mockk()
+    private val observerClearMoviesList: Observer<Boolean> = mockk()
+    private val observerToastMessageStringResId: Observer<Int> = mockk()
 
     private val moviesRepository: MoviesRepository = mockk()
 
@@ -35,8 +39,18 @@ class SearchViewModelTest {
     @Before
     fun setup() {
         searchViewModel = SearchViewModel(moviesRepository)
-        searchViewModel.event.observeForever(observerViewEvent)
-        every { observerViewEvent.onChanged(any()) } just Runs
+        searchViewModel.moviesList.observeForever(observerMoviesList)
+        searchViewModel.isProgressVisible.observeForever(observerIsProgressVisible)
+        searchViewModel.isEmptySearchResultVisible.observeForever(observerIsEmptySearchResultVisible)
+        searchViewModel.isPlaceholderVisible.observeForever(observerIsPlaceholderVisible)
+        searchViewModel.clearMoviesList.observeForever(observerClearMoviesList)
+        searchViewModel.toastMessageStringResId.observeForever(observerToastMessageStringResId)
+        every { observerMoviesList.onChanged(any()) } just Runs
+        every { observerIsProgressVisible.onChanged(any()) } just Runs
+        every { observerIsEmptySearchResultVisible.onChanged(any()) } just Runs
+        every { observerIsPlaceholderVisible.onChanged(any()) } just Runs
+        every { observerClearMoviesList.onChanged(any()) } just Runs
+        every { observerToastMessageStringResId.onChanged(any()) } just Runs
     }
 
     @After
@@ -51,8 +65,8 @@ class SearchViewModelTest {
      * When:
      * - searchMovie is called with some query
      * Then should:
-     * - call setEvent with SetMoviesList in searchViewModel with list of movies from given TmbdResponse
-     * - call setEvent with ShowEmptySearchResult in searchViewModel with false as isVisible
+     * - post moviesList in searchViewModel with list of movies from given TmbdResponse
+     * - post isEmptySearchResult in searchViewModel with false as isVisible
      */
     @Test
     fun check_searchMovie() {
@@ -73,11 +87,11 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ShowEmptySearchResult(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerMoviesList.onChanged(movies)
+            observerIsEmptySearchResultVisible.onChanged(false)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -87,8 +101,8 @@ class SearchViewModelTest {
      * When:
      * - searchMovie is called with some query
      * Then should:
-     * - not call setEvent with SetMoviesList in searchViewModel with list of movies from given TmbdResponse
-     * - call setEvent with ShowEmptySearchResult in searchViewModel with true as isVisible
+     * - not post moviesList in searchViewModel with list of movies from given TmbdResponse
+     * - post isEmptySearchResult in searchViewModel with true as isVisible
      */
     @Test
     fun check_searchMovie_emptyMoviesList() {
@@ -106,14 +120,14 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ShowEmptySearchResult(true))
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ClearMovieList)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerIsEmptySearchResultVisible.onChanged(true)
+            observerClearMoviesList.onChanged(any())
+            observerIsProgressVisible.onChanged(false)
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(SearchViewModel.SearchEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerMoviesList.onChanged(movies) }
     }
 
     /**
@@ -122,9 +136,9 @@ class SearchViewModelTest {
      * When:
      * - searchMovie is called with some query
      * Then should:
-     * - not call setEvent with SetMoviesList in searchViewModel
-     * - call setEvent with ShowMessage in searchViewModel with R.string.general_error_message as resId
-     * - call setEvent with ShowPlaceholder in searchViewModel with true as isVisible
+     * - not post moviesList in searchViewModel
+     * - post toastMessageStringResId in searchViewModel with R.string.general_error_message
+     * - post isPlaceholderVisible in searchViewModel with true as isVisible
      */
     @Test
     fun check_searchMovie_error() {
@@ -140,11 +154,11 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsPlaceholderVisible.onChanged(true)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -152,7 +166,7 @@ class SearchViewModelTest {
      * When:
      * - addMovieToWatchlist is called with some movie
      * Then should:
-     * - call setEvent with ShowMessage in searchViewModel with R.string.movie_added_to_watchlist_message as resId
+     * - post toastMessageStringResId in searchViewModel with R.string.movie_added_to_watchlist_message
      */
     @Test
     fun check_addMovieToWatchlist() {
@@ -166,10 +180,10 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movie_added_to_watchlist_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.movie_added_to_watchlist_message)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
@@ -179,7 +193,7 @@ class SearchViewModelTest {
      * When:
      * - addMovieToWatchlist is called with some movie
      * Then should:
-     * - call setEvent with ShowMessage in searchViewModel with R.string.general_error_message as resId
+     * - post toastMessageStringResId in searchViewModel with R.string.general_error_message
      */
     @Test
     fun check_addMovieToWatchlist_error() {
@@ -195,10 +209,10 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerIsProgressVisible.onChanged(true)
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerToastMessageStringResId.onChanged(R.string.general_error_message)
+            observerIsProgressVisible.onChanged(false)
         }
     }
 
