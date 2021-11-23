@@ -14,7 +14,9 @@
         android:theme="@style/Theme.MovieWatchlist">
         <activity
             android:name=".activities.MainActivity"
+            android:configChanges="orientation"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.App.Starting"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

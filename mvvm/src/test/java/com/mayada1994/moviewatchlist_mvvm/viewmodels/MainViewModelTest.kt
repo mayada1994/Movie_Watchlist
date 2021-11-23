@@ -127,7 +127,7 @@ class MainViewModelTest {
      * When:
      * - onMenuItemSelected is called with other itemId
      * Then should:
-     * - post  toastMessageStringResId in mainViewModel with resId as R.string.general_error_message
+     * - post toastMessageStringResId in mainViewModel with resId as R.string.general_error_message
      */
     @Test
     fun check_onMenuItemSelected_Other() {
