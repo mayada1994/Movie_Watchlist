@@ -2,8 +2,8 @@ package com.mayada1994.moviewatchlist_mvp.models
 
 import com.mayada1994.moviewatchlist_mvp.entities.Movie
 import com.mayada1994.moviewatchlist_mvp.entities.TmbdResponse
-import com.mayada1994.rules.RxImmediateSchedulerRule
 import com.mayada1994.moviewatchlist_mvp.services.MoviesService
+import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -47,14 +47,14 @@ class RemoteDataSourceTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.searchMovie(apiKey, query, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.searchMovie(apiKey, query) } returns Single.just(tmbdResponse)
 
         //When
-        val result = remoteDataSource.searchMovie(query, 1)
+        val result = remoteDataSource.searchMovie(query)
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.searchMovie(apiKey, query, 1) }
+        verify { moviesService.searchMovie(apiKey, query) }
     }
 
     @Test
@@ -68,14 +68,14 @@ class RemoteDataSourceTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.getPopularMovies(apiKey, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.getPopularMovies(apiKey) } returns Single.just(tmbdResponse)
 
         //When
-        val result = remoteDataSource.getPopularMovies(1)
+        val result = remoteDataSource.getPopularMovies()
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.getPopularMovies(apiKey, 1) }
+        verify { moviesService.getPopularMovies(apiKey) }
     }
 
     @Test
@@ -87,14 +87,14 @@ class RemoteDataSourceTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.getUpcomingMovies(apiKey, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.getUpcomingMovies(apiKey) } returns Single.just(tmbdResponse)
 
         //When
-        val result = remoteDataSource.getUpcomingMovies(1)
+        val result = remoteDataSource.getUpcomingMovies()
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.getUpcomingMovies(apiKey, 1) }
+        verify { moviesService.getUpcomingMovies(apiKey) }
     }
 
 }

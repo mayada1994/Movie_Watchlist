@@ -46,7 +46,7 @@ class SearchViewModel(private val moviesRepository: MoviesRepository) : ViewMode
         _isPlaceholderVisible.postValue(false)
         _isProgressVisible.postValue(true)
         compositeDisposable.add(
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { _isProgressVisible.postValue(false) }

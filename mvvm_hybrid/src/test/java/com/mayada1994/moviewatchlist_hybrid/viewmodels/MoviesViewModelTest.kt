@@ -68,7 +68,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -76,7 +76,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerViewEvent.onChanged(MoviesEvent.SetMoviesList(movies))
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(false))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
@@ -101,7 +101,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -109,7 +109,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
@@ -134,7 +134,7 @@ class MoviesViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getPopularMovies() } returns Single.error(testException)
 
         //When
         moviesViewModel.init(movieType)
@@ -142,7 +142,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
             observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
@@ -170,7 +170,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -178,7 +178,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerViewEvent.onChanged(MoviesEvent.SetMoviesList(movies))
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(false))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
@@ -203,7 +203,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -211,7 +211,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
@@ -236,7 +236,7 @@ class MoviesViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getUpcomingMovies() } returns Single.error(testException)
 
         //When
         moviesViewModel.init(movieType)
@@ -244,7 +244,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
             observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))

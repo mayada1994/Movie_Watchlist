@@ -62,7 +62,7 @@ class SearchPresenterTest {
 
         every { viewInterface.showPlaceholder(false) } just Runs
 
-        every { remoteDataSource.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.searchMovie(query) } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -78,7 +78,7 @@ class SearchPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.searchMovie(query, 1)
+            remoteDataSource.searchMovie(query)
             viewInterface.setMoviesList(movies)
             viewInterface.showEmptySearchResult(false)
             viewInterface.showProgress(false)
@@ -105,7 +105,7 @@ class SearchPresenterTest {
 
         every { viewInterface.showPlaceholder(false) } just Runs
 
-        every { remoteDataSource.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.searchMovie(query) } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -121,7 +121,7 @@ class SearchPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.searchMovie(query, 1)
+            remoteDataSource.searchMovie(query)
             viewInterface.showEmptySearchResult(true)
             viewInterface.clearMovieList()
             viewInterface.showProgress(false)
@@ -149,7 +149,7 @@ class SearchPresenterTest {
 
         every { viewInterface.showPlaceholder(false) } just Runs
 
-        every { remoteDataSource.searchMovie(query, 1) } returns Single.error(testException)
+        every { remoteDataSource.searchMovie(query) } returns Single.error(testException)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -165,7 +165,7 @@ class SearchPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.searchMovie(query, 1)
+            remoteDataSource.searchMovie(query)
             viewInterface.showToast(R.string.general_error_message)
             viewInterface.showPlaceholder(true)
             viewInterface.showProgress(false)

@@ -74,7 +74,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -82,7 +82,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerMoviesList.onChanged(movies)
             observerIsPlaceholderVisible.onChanged(false)
             observerIsProgressVisible.onChanged(false)
@@ -107,7 +107,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -115,7 +115,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerIsPlaceholderVisible.onChanged(true)
             observerIsProgressVisible.onChanged(false)
         }
@@ -140,7 +140,7 @@ class MoviesViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getPopularMovies() } returns Single.error(testException)
 
         //When
         moviesViewModel.init(movieType)
@@ -148,7 +148,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
             observerIsPlaceholderVisible.onChanged(true)
             observerToastMessageStringResId.onChanged(R.string.general_error_message)
             observerIsProgressVisible.onChanged(false)
@@ -176,7 +176,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -184,7 +184,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerMoviesList.onChanged(movies)
             observerIsPlaceholderVisible.onChanged(false)
             observerIsProgressVisible.onChanged(false)
@@ -209,7 +209,7 @@ class MoviesViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         moviesViewModel.init(movieType)
@@ -217,7 +217,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerIsPlaceholderVisible.onChanged(true)
             observerIsProgressVisible.onChanged(false)
         }
@@ -242,7 +242,7 @@ class MoviesViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getUpcomingMovies() } returns Single.error(testException)
 
         //When
         moviesViewModel.init(movieType)
@@ -250,7 +250,7 @@ class MoviesViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
             observerIsPlaceholderVisible.onChanged(true)
             observerToastMessageStringResId.onChanged(R.string.general_error_message)
             observerIsProgressVisible.onChanged(false)

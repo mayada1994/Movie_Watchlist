@@ -21,7 +21,7 @@ class SearchViewModel(private val moviesRepository: MoviesRepository) : BaseView
         setEvent(BaseEvent.ShowPlaceholder(false))
         setEvent(BaseEvent.ShowProgress(true))
         compositeDisposable.add(
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { setEvent(BaseEvent.ShowProgress(false)) }

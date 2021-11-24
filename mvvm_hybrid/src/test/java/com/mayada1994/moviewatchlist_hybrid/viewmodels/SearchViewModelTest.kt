@@ -68,7 +68,7 @@ class SearchViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         searchViewModel.searchMovie(query)
@@ -76,7 +76,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerViewEvent.onChanged(SearchEvent.SetMoviesList(movies))
             observerViewEvent.onChanged(SearchEvent.ShowEmptySearchResult(false))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
@@ -101,7 +101,7 @@ class SearchViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         searchViewModel.searchMovie(query)
@@ -109,7 +109,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerViewEvent.onChanged(SearchEvent.ShowEmptySearchResult(true))
             observerViewEvent.onChanged(SearchEvent.ClearMovieList)
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
@@ -135,7 +135,7 @@ class SearchViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.error(testException)
+        every { moviesRepository.searchMovie(query) } returns Single.error(testException)
 
         //When
         searchViewModel.searchMovie(query)
@@ -143,7 +143,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
             observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
             observerViewEvent.onChanged(BaseEvent.ShowProgress(false))

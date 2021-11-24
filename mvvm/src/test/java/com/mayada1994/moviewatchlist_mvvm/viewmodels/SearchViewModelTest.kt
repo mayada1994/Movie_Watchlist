@@ -80,7 +80,7 @@ class SearchViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         searchViewModel.searchMovie(query)
@@ -88,7 +88,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerMoviesList.onChanged(movies)
             observerIsEmptySearchResultVisible.onChanged(false)
             observerIsProgressVisible.onChanged(false)
@@ -113,7 +113,7 @@ class SearchViewModelTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         searchViewModel.searchMovie(query)
@@ -121,7 +121,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerIsEmptySearchResultVisible.onChanged(true)
             observerClearMoviesList.onChanged(any())
             observerIsProgressVisible.onChanged(false)
@@ -147,7 +147,7 @@ class SearchViewModelTest {
 
         val testException = Exception()
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.error(testException)
+        every { moviesRepository.searchMovie(query) } returns Single.error(testException)
 
         //When
         searchViewModel.searchMovie(query)
@@ -155,7 +155,7 @@ class SearchViewModelTest {
         //Then
         verifyOrder {
             observerIsProgressVisible.onChanged(true)
-            moviesRepository.searchMovie(query, 1)
+            moviesRepository.searchMovie(query)
             observerToastMessageStringResId.onChanged(R.string.general_error_message)
             observerIsPlaceholderVisible.onChanged(true)
             observerIsProgressVisible.onChanged(false)

@@ -60,13 +60,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.DataState(movies)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getPopularMovies(1) }
+        verify { moviesRepository.getPopularMovies() }
         result.test().assertResult(moviesState)
     }
 
@@ -90,13 +90,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.EmptyState
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getPopularMovies() } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getPopularMovies(1) }
+        verify { moviesRepository.getPopularMovies() }
         result.test().assertResult(moviesState)
     }
 
@@ -118,13 +118,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.ErrorState(R.string.general_error_message)
 
-        every { moviesRepository.getPopularMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getPopularMovies() } returns Single.error(testException)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getPopularMovies(1) }
+        verify { moviesRepository.getPopularMovies() }
         result.test().assertResult(moviesState)
     }
 
@@ -151,13 +151,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.DataState(movies)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getUpcomingMovies(1) }
+        verify { moviesRepository.getUpcomingMovies() }
         result.test().assertResult(moviesState)
     }
 
@@ -181,13 +181,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.EmptyState
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getUpcomingMovies(1) }
+        verify { moviesRepository.getUpcomingMovies() }
         result.test().assertResult(moviesState)
     }
 
@@ -209,13 +209,13 @@ class MoviesInteractorTest {
 
         val moviesState = MoviesState.ErrorState(R.string.general_error_message)
 
-        every { moviesRepository.getUpcomingMovies(1) } returns Single.error(testException)
+        every { moviesRepository.getUpcomingMovies() } returns Single.error(testException)
 
         //When
         val result = interactor.getMovies(movieType)
 
         //Then
-        verify { moviesRepository.getUpcomingMovies(1) }
+        verify { moviesRepository.getUpcomingMovies() }
         result.test().assertResult(moviesState)
     }
 

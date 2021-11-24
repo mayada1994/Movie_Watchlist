@@ -113,7 +113,7 @@ class SearchFragment : Fragment() {
     private fun searchMovie(query: String) {
         (requireActivity() as MainActivity).showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.searchMovie(query, 1)
+            remoteDataSource.searchMovie(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { (requireActivity() as MainActivity).showProgress(false) }

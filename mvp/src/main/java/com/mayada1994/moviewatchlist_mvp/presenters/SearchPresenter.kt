@@ -25,7 +25,7 @@ class SearchPresenter(
         viewInterface.showPlaceholder(false)
         viewInterface.showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.searchMovie(query, 1)
+            remoteDataSource.searchMovie(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { viewInterface.showProgress(false) }

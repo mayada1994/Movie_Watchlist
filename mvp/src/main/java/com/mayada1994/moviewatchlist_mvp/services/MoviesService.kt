@@ -8,12 +8,12 @@ import retrofit2.http.Query
 interface MoviesService {
 
     @GET("search/movie")
-    fun searchMovie(@Query("api_key") apiKey: String, @Query("query") query: String, @Query("page") page: Int?): Single<TmbdResponse>
+    fun searchMovie(@Query("api_key") apiKey: String, @Query("query") query: String): Single<TmbdResponse>
 
     @GET("movie/popular")
-    fun getPopularMovies(@Query("api_key") apiKey: String, @Query("page") page: Int?): Single<TmbdResponse>
+    fun getPopularMovies(@Query("api_key") apiKey: String): Single<TmbdResponse>
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(@Query("api_key") apiKey: String, @Query("page") page: Int?): Single<TmbdResponse>
+    fun getUpcomingMovies(@Query("api_key") apiKey: String): Single<TmbdResponse>
 
 }

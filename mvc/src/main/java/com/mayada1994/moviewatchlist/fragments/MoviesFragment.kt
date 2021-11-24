@@ -74,7 +74,7 @@ class MoviesFragment : Fragment() {
     private fun getPopularMovies() {
         (requireActivity() as MainActivity).showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.getPopularMovies(1)
+            remoteDataSource.getPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { (requireActivity() as MainActivity).showProgress(false) }
@@ -95,7 +95,7 @@ class MoviesFragment : Fragment() {
     private fun getUpcomingMovies() {
         (requireActivity() as MainActivity).showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.getUpcomingMovies(1)
+            remoteDataSource.getUpcomingMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { (requireActivity() as MainActivity).showProgress(false) }

@@ -32,7 +32,7 @@ class MoviesPresenter(
     private fun getPopularMovies() {
         viewInterface.showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.getPopularMovies(1)
+            remoteDataSource.getPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { viewInterface.showProgress(false) }
@@ -60,7 +60,7 @@ class MoviesPresenter(
     private fun getUpcomingMovies() {
         viewInterface.showProgress(true)
         compositeDisposable.add(
-            remoteDataSource.getUpcomingMovies(1)
+            remoteDataSource.getUpcomingMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { viewInterface.showProgress(false) }

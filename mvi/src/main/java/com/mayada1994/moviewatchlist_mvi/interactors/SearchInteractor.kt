@@ -9,7 +9,7 @@ import io.reactivex.Observable
 class SearchInteractor(private val moviesRepository: MoviesRepository) {
 
     fun searchMovie(query: String): Observable<SearchState> {
-        return moviesRepository.searchMovie(query, 1).toObservable()
+        return moviesRepository.searchMovie(query).toObservable()
             .map {
                 if (it.results.isNotEmpty()) {
                     SearchState.DataState(it.results)

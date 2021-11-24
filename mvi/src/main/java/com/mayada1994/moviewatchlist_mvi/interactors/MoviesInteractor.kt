@@ -12,7 +12,7 @@ class MoviesInteractor(private val moviesRepository: MoviesRepository) {
     fun getMovies(movieType: MovieType): Observable<MoviesState> {
         return when (movieType) {
             MovieType.POPULAR -> {
-                moviesRepository.getPopularMovies(1).toObservable()
+                moviesRepository.getPopularMovies().toObservable()
                     .map {
                         if (it.results.isNullOrEmpty()) {
                             MoviesState.EmptyState
@@ -26,7 +26,7 @@ class MoviesInteractor(private val moviesRepository: MoviesRepository) {
             }
 
             MovieType.UPCOMING -> {
-                moviesRepository.getUpcomingMovies(1).toObservable()
+                moviesRepository.getUpcomingMovies().toObservable()
                     .map {
                         if (it.results.isNullOrEmpty()) {
                             MoviesState.EmptyState

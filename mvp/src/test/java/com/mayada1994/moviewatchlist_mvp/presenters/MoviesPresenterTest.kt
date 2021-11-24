@@ -61,7 +61,7 @@ class MoviesPresenterTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { remoteDataSource.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.getPopularMovies() } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -77,7 +77,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getPopularMovies(1)
+            remoteDataSource.getPopularMovies()
             viewInterface.setMoviesList(movies)
             viewInterface.showPlaceholder(false)
             viewInterface.showProgress(false)
@@ -102,7 +102,7 @@ class MoviesPresenterTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { remoteDataSource.getPopularMovies(1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.getPopularMovies() } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -116,7 +116,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getPopularMovies(1)
+            remoteDataSource.getPopularMovies()
             viewInterface.showPlaceholder(true)
             viewInterface.showProgress(false)
         }
@@ -141,7 +141,7 @@ class MoviesPresenterTest {
 
         val testException = Exception()
 
-        every { remoteDataSource.getPopularMovies(1) } returns Single.error(testException)
+        every { remoteDataSource.getPopularMovies() } returns Single.error(testException)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -157,7 +157,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getPopularMovies(1)
+            remoteDataSource.getPopularMovies()
             viewInterface.showPlaceholder(true)
             viewInterface.showToast(R.string.general_error_message)
             viewInterface.showProgress(false)
@@ -187,7 +187,7 @@ class MoviesPresenterTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { remoteDataSource.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -203,7 +203,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getUpcomingMovies(1)
+            remoteDataSource.getUpcomingMovies()
             viewInterface.setMoviesList(movies)
             viewInterface.showPlaceholder(false)
             viewInterface.showProgress(false)
@@ -228,7 +228,7 @@ class MoviesPresenterTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { remoteDataSource.getUpcomingMovies(1) } returns Single.just(tmbdResponse)
+        every { remoteDataSource.getUpcomingMovies() } returns Single.just(tmbdResponse)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -242,7 +242,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getUpcomingMovies(1)
+            remoteDataSource.getUpcomingMovies()
             viewInterface.showPlaceholder(true)
             viewInterface.showProgress(false)
         }
@@ -267,7 +267,7 @@ class MoviesPresenterTest {
 
         val testException = Exception()
 
-        every { remoteDataSource.getUpcomingMovies(1) } returns Single.error(testException)
+        every { remoteDataSource.getUpcomingMovies() } returns Single.error(testException)
 
         every { viewInterface.showProgress(true) } just Runs
 
@@ -283,7 +283,7 @@ class MoviesPresenterTest {
         //Then
         verifyOrder {
             viewInterface.showProgress(true)
-            remoteDataSource.getUpcomingMovies(1)
+            remoteDataSource.getUpcomingMovies()
             viewInterface.showPlaceholder(true)
             viewInterface.showToast(R.string.general_error_message)
             viewInterface.showProgress(false)

@@ -28,7 +28,7 @@ class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseView
     private fun getPopularMovies() {
         setEvent(BaseEvent.ShowProgress(true))
         compositeDisposable.add(
-            moviesRepository.getPopularMovies(1)
+            moviesRepository.getPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { setEvent(BaseEvent.ShowProgress(false)) }
@@ -56,7 +56,7 @@ class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseView
     private fun getUpcomingMovies() {
         setEvent(BaseEvent.ShowProgress(true))
         compositeDisposable.add(
-            moviesRepository.getUpcomingMovies(1)
+            moviesRepository.getUpcomingMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally { setEvent(BaseEvent.ShowProgress(false)) }

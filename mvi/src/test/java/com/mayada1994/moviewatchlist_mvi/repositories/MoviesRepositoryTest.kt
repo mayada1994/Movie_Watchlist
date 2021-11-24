@@ -108,14 +108,14 @@ class MoviesRepositoryTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.searchMovie(apiKey, query, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.searchMovie(apiKey, query) } returns Single.just(tmbdResponse)
 
         //When
-        val result = moviesRepository.searchMovie(query, 1)
+        val result = moviesRepository.searchMovie(query)
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.searchMovie(apiKey, query, 1) }
+        verify { moviesService.searchMovie(apiKey, query) }
     }
 
     @Test
@@ -129,14 +129,14 @@ class MoviesRepositoryTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.getPopularMovies(apiKey, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.getPopularMovies(apiKey) } returns Single.just(tmbdResponse)
 
         //When
-        val result = moviesRepository.getPopularMovies(1)
+        val result = moviesRepository.getPopularMovies()
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.getPopularMovies(apiKey, 1) }
+        verify { moviesService.getPopularMovies(apiKey) }
     }
 
     @Test
@@ -148,14 +148,14 @@ class MoviesRepositoryTest {
 
         val tmbdResponse = TmbdResponse(results = movies)
 
-        every { moviesService.getUpcomingMovies(apiKey, 1) } returns Single.just(tmbdResponse)
+        every { moviesService.getUpcomingMovies(apiKey) } returns Single.just(tmbdResponse)
 
         //When
-        val result = moviesRepository.getUpcomingMovies(1)
+        val result = moviesRepository.getUpcomingMovies()
 
         //Then
         result.test().assertValue(tmbdResponse)
-        verify { moviesService.getUpcomingMovies(apiKey, 1) }
+        verify { moviesService.getUpcomingMovies(apiKey) }
     }
 
     //endregion

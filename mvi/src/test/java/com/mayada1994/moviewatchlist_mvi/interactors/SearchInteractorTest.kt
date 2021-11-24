@@ -59,13 +59,13 @@ class SearchInteractorTest {
 
         val moviesState = SearchState.DataState(movies)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.searchMovie(query)
 
         //Then
-        verify { moviesRepository.searchMovie(query, 1) }
+        verify { moviesRepository.searchMovie(query) }
         result.test().assertResult(moviesState)
     }
 
@@ -89,13 +89,13 @@ class SearchInteractorTest {
 
         val moviesState = SearchState.EmptyState
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.just(tmbdResponse)
+        every { moviesRepository.searchMovie(query) } returns Single.just(tmbdResponse)
 
         //When
         val result = interactor.searchMovie(query)
 
         //Then
-        verify { moviesRepository.searchMovie(query, 1) }
+        verify { moviesRepository.searchMovie(query) }
         result.test().assertResult(moviesState)
     }
 
@@ -117,13 +117,13 @@ class SearchInteractorTest {
 
         val moviesState = SearchState.ErrorState(R.string.general_error_message)
 
-        every { moviesRepository.searchMovie(query, 1) } returns Single.error(testException)
+        every { moviesRepository.searchMovie(query) } returns Single.error(testException)
 
         //When
         val result = interactor.searchMovie(query)
 
         //Then
-        verify { moviesRepository.searchMovie(query, 1) }
+        verify { moviesRepository.searchMovie(query) }
         result.test().assertResult(moviesState)
     }
 
