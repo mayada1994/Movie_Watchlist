@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mayada1994.moviewatchlist">
+    package="com.mayada1994.moviewatchlist_mvc">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".WatchlistApp"
+        android:name="com.mayada1994.moviewatchlist_mvc.WatchlistApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieWatchlist">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.mayada1994.moviewatchlist_mvc.activities.MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
