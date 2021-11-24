@@ -12,10 +12,10 @@ import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.databinding.ActivityMainBinding
 import com.mayada1994.moviewatchlist_hybrid.di.WatchlistComponent
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.MainEvent
 import com.mayada1994.moviewatchlist_hybrid.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.BaseViewModel.BaseEvent
 import com.mayada1994.moviewatchlist_hybrid.viewmodels.MainViewModel
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.MainViewModel.MainEvent
 
 class MainActivity : AppCompatActivity() {
 

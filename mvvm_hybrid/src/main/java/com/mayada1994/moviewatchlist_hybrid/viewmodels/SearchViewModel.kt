@@ -3,8 +3,9 @@ package com.mayada1994.moviewatchlist_hybrid.viewmodels
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
 import com.mayada1994.moviewatchlist_hybrid.entities.TmbdResponse
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.SearchEvent
 import com.mayada1994.moviewatchlist_hybrid.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableCompletableObserver
@@ -13,14 +14,6 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class SearchViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
-
-    sealed class SearchEvent {
-        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
-
-        data class ShowEmptySearchResult(val isVisible: Boolean) : ViewEvent
-
-        object ClearMovieList : ViewEvent
-    }
 
     private val compositeDisposable = CompositeDisposable()
 

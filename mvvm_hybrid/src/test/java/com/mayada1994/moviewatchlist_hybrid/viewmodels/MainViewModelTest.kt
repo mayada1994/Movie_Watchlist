@@ -3,10 +3,12 @@ package com.mayada1994.moviewatchlist_hybrid.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_hybrid.R
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.MainEvent
+import com.mayada1994.moviewatchlist_hybrid.events.ViewEvent
 import com.mayada1994.moviewatchlist_hybrid.fragments.MoviesFragment
 import com.mayada1994.moviewatchlist_hybrid.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_hybrid.fragments.WatchlistFragment
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import org.junit.After
@@ -56,7 +58,7 @@ class MainViewModelTest {
         //Then
         verify {
             observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+                MainEvent.ShowSelectedScreen(
                     fragmentClass = fragmentClass,
                     selectedMenuItemId = 0
                 )
@@ -83,7 +85,7 @@ class MainViewModelTest {
         //Then
         verify {
             observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+                MainEvent.ShowSelectedScreen(
                     fragmentClass = fragmentClass,
                     args = MoviesFragment.MOVIE_TYPE to movieType,
                     selectedMenuItemId = 1
@@ -111,7 +113,7 @@ class MainViewModelTest {
         //Then
         verify {
             observerViewEvent.onChanged(
-                MainViewModel.MainEvent.ShowSelectedScreen(
+                MainEvent.ShowSelectedScreen(
                     fragmentClass = fragmentClass,
                     args = MoviesFragment.MOVIE_TYPE to movieType,
                     selectedMenuItemId = 2
@@ -137,7 +139,7 @@ class MainViewModelTest {
         //Then
         verify {
             observerViewEvent.onChanged(
-                BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message)
+                BaseEvent.ShowMessage(R.string.general_error_message)
             )
         }
     }

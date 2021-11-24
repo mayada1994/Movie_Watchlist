@@ -4,8 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.ViewEvent
+import com.mayada1994.moviewatchlist_hybrid.events.WatchlistEvent
 import com.mayada1994.moviewatchlist_hybrid.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
@@ -69,11 +71,11 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(WatchlistEvent.SetMoviesList(movies))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(false))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 
@@ -99,13 +101,13 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerViewEvent.onChanged(WatchlistEvent.SetMoviesList(movies)) }
     }
 
     /**
@@ -130,10 +132,10 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.getMovies()
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 
@@ -162,7 +164,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
         }
     }
 
@@ -189,7 +191,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
         }
     }
 
@@ -216,7 +218,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
         }
     }
 
@@ -241,7 +243,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
         }
     }
 
@@ -260,7 +262,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
         }
     }
 
@@ -279,7 +281,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
         }
     }
 
@@ -298,7 +300,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(false))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(false))
         }
     }
 
@@ -317,7 +319,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
         }
     }
 
@@ -339,7 +341,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.ShowDeleteMoviesDialog)
+            observerViewEvent.onChanged(WatchlistEvent.ShowDeleteMoviesDialog)
         }
     }
 
@@ -358,7 +360,7 @@ class WatchlistViewModelTest {
 
         //Then
         verify {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.GoToSearchScreen)
+            observerViewEvent.onChanged(WatchlistEvent.GoToSearchScreen)
         }
     }
 
@@ -386,12 +388,12 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.deleteMovies(movies)
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.UpdateMovies(movies))
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(WatchlistEvent.UpdateMovies(movies))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_input_add))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
 
     }
@@ -421,11 +423,11 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(WatchlistViewModel.WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(WatchlistEvent.SetFloatingActionButtonImage(android.R.drawable.ic_delete))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.deleteMovies(movies)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
 
     }
@@ -452,7 +454,7 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movie_deleted_message))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.movie_deleted_message))
         }
     }
 
@@ -480,7 +482,7 @@ class WatchlistViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movies_deleted_message))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.movies_deleted_message))
         }
     }
 

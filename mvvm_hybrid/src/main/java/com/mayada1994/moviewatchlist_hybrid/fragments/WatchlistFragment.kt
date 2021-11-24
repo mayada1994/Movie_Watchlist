@@ -16,9 +16,9 @@ import com.mayada1994.moviewatchlist_hybrid.databinding.DialogEditWatchlistBindi
 import com.mayada1994.moviewatchlist_hybrid.databinding.FragmentWatchlistBinding
 import com.mayada1994.moviewatchlist_hybrid.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.BaseViewModel
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.WatchlistEvent
 import com.mayada1994.moviewatchlist_hybrid.viewmodels.WatchlistViewModel
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.WatchlistViewModel.WatchlistEvent
 
 class WatchlistFragment : Fragment() {
 
@@ -64,11 +64,11 @@ class WatchlistFragment : Fragment() {
 
                 is WatchlistEvent.UpdateMovies -> updateMovies(event.movies)
 
-                is BaseViewModel.BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
+                is BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
 
-                is BaseViewModel.BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
+                is BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
 
-                is BaseViewModel.BaseEvent.ShowMessage -> showToast(event.resId)
+                is BaseEvent.ShowMessage -> showToast(event.resId)
             }
         })
     }

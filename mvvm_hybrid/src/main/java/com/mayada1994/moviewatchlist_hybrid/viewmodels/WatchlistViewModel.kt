@@ -1,10 +1,10 @@
 package com.mayada1994.moviewatchlist_hybrid.viewmodels
 
-import androidx.annotation.DrawableRes
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.WatchlistEvent
 import com.mayada1994.moviewatchlist_hybrid.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableCompletableObserver
@@ -13,18 +13,6 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class WatchlistViewModel(private val moviesRepository: MoviesRepository): BaseViewModel() {
-
-    sealed class WatchlistEvent {
-        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
-
-        data class SetFloatingActionButtonImage(@DrawableRes val resId: Int) : ViewEvent
-
-        object GoToSearchScreen : ViewEvent
-
-        object ShowDeleteMoviesDialog : ViewEvent
-
-        data class UpdateMovies(val movies: List<Movie>) : ViewEvent
-    }
 
     private val compositeDisposable = CompositeDisposable()
 

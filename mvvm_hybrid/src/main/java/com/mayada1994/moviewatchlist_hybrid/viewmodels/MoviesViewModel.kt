@@ -3,9 +3,10 @@ package com.mayada1994.moviewatchlist_hybrid.viewmodels
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
 import com.mayada1994.moviewatchlist_hybrid.entities.TmbdResponse
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.MoviesEvent
 import com.mayada1994.moviewatchlist_hybrid.fragments.MoviesFragment.MovieType
 import com.mayada1994.moviewatchlist_hybrid.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableCompletableObserver
@@ -14,10 +15,6 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class MoviesViewModel(private val moviesRepository: MoviesRepository) : BaseViewModel() {
-
-    sealed class MoviesEvent {
-        data class SetMoviesList(val movies: List<Movie>) : ViewEvent
-    }
 
     private var compositeDisposable = CompositeDisposable()
 

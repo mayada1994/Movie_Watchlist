@@ -5,8 +5,10 @@ import androidx.lifecycle.Observer
 import com.mayada1994.moviewatchlist_hybrid.R
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
 import com.mayada1994.moviewatchlist_hybrid.entities.TmbdResponse
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.SearchEvent
+import com.mayada1994.moviewatchlist_hybrid.events.ViewEvent
 import com.mayada1994.moviewatchlist_hybrid.repositories.MoviesRepository
-import com.mayada1994.moviewatchlist_hybrid.utils.ViewEvent
 import com.mayada1994.rules.RxImmediateSchedulerRule
 import io.mockk.*
 import io.reactivex.Completable
@@ -73,11 +75,11 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.SetMoviesList(movies))
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ShowEmptySearchResult(false))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(SearchEvent.SetMoviesList(movies))
+            observerViewEvent.onChanged(SearchEvent.ShowEmptySearchResult(false))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 
@@ -106,14 +108,14 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ShowEmptySearchResult(true))
-            observerViewEvent.onChanged(SearchViewModel.SearchEvent.ClearMovieList)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(SearchEvent.ShowEmptySearchResult(true))
+            observerViewEvent.onChanged(SearchEvent.ClearMovieList)
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
 
-        verify(exactly = 0) { observerViewEvent.onChanged(SearchViewModel.SearchEvent.SetMoviesList(movies)) }
+        verify(exactly = 0) { observerViewEvent.onChanged(SearchEvent.SetMoviesList(movies)) }
     }
 
     /**
@@ -140,11 +142,11 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.searchMovie(query, 1)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowPlaceholder(true))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
+            observerViewEvent.onChanged(BaseEvent.ShowPlaceholder(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 
@@ -166,10 +168,10 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.movie_added_to_watchlist_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.movie_added_to_watchlist_message))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 
@@ -195,10 +197,10 @@ class SearchViewModelTest {
 
         //Then
         verifyOrder {
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(true))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(true))
             moviesRepository.insertMovie(movie)
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowMessage(R.string.general_error_message))
-            observerViewEvent.onChanged(BaseViewModel.BaseEvent.ShowProgress(false))
+            observerViewEvent.onChanged(BaseEvent.ShowMessage(R.string.general_error_message))
+            observerViewEvent.onChanged(BaseEvent.ShowProgress(false))
         }
     }
 

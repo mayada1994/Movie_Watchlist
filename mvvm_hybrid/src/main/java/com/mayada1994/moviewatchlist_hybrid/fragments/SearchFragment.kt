@@ -24,9 +24,9 @@ import com.mayada1994.moviewatchlist_hybrid.databinding.DialogEditWatchlistBindi
 import com.mayada1994.moviewatchlist_hybrid.databinding.FragmentSearchBinding
 import com.mayada1994.moviewatchlist_hybrid.di.WatchlistComponent
 import com.mayada1994.moviewatchlist_hybrid.entities.Movie
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.BaseViewModel
+import com.mayada1994.moviewatchlist_hybrid.events.BaseEvent
+import com.mayada1994.moviewatchlist_hybrid.events.SearchEvent
 import com.mayada1994.moviewatchlist_hybrid.viewmodels.SearchViewModel
-import com.mayada1994.moviewatchlist_hybrid.viewmodels.SearchViewModel.SearchEvent
 
 class SearchFragment : Fragment() {
 
@@ -58,11 +58,11 @@ class SearchFragment : Fragment() {
 
                 is SearchEvent.ClearMovieList -> clearMovieList()
 
-                is BaseViewModel.BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
+                is BaseEvent.ShowProgress -> showProgress(event.isProgressVisible)
 
-                is BaseViewModel.BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
+                is BaseEvent.ShowPlaceholder -> showPlaceholder(event.isVisible)
 
-                is BaseViewModel.BaseEvent.ShowMessage -> showToast(event.resId)
+                is BaseEvent.ShowMessage -> showToast(event.resId)
             }
         })
     }
