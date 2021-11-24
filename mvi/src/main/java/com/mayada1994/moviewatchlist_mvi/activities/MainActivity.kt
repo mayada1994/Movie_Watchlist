@@ -118,8 +118,8 @@ class MainActivity : AppCompatActivity(), MainView {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         presenter.unbind()
     }
 

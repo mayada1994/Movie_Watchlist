@@ -168,8 +168,8 @@ class WatchlistFragment : Fragment(), WatchlistView {
         binding.fab.setImageResource(resId)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         presenter.unbind()
     }
 

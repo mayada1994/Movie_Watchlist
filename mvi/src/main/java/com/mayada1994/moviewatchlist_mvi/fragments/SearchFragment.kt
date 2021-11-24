@@ -209,8 +209,8 @@ class SearchFragment : Fragment(), SearchMovieView {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         presenter.unbind()
     }
 
