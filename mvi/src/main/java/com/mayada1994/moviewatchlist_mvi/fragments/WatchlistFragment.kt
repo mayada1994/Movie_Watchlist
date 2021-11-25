@@ -35,6 +35,8 @@ class WatchlistFragment : Fragment(), WatchlistView {
 
     private val checkedMoviesListSubject: PublishSubject<List<Movie>> = PublishSubject.create()
 
+    private var deleteDialog: AlertDialog? = null
+
     private lateinit var presenter: WatchlistPresenter
 
     override fun onCreateView(
@@ -132,20 +134,24 @@ class WatchlistFragment : Fragment(), WatchlistView {
     }
 
     private fun renderShowDeleteMoviesDialogState() {
-        val dialogView = DialogEditWatchlistBinding.inflate(layoutInflater)
-        val alertDialog = AlertDialog.Builder(requireContext()).setView(dialogView.root).create()
-
-        with(dialogView) {
-            txtPrompt.text = getString(R.string.dialog_delete_movie_prompt_message)
-            btnOk.setOnClickListener {
-                alertDialog.dismiss()
-                moviesSubject.onNext(Unit)
+        if (deleteDialog == null) {
+            val dialogView = DialogEditWatchlistBinding.inflate(layoutInflater)
+            val alertDialog =
+                AlertDialog.Builder(requireContext()).setView(dialogView.root).create()
+            deleteDialog = alertDialog
+            with(dialogView) {
+                txtPrompt.text = getString(R.string.dialog_delete_movie_prompt_message)
+                btnOk.setOnClickListener {
+                    alertDialog.dismiss()
+                    moviesSubject.onNext(Unit)
+                }
+                btnCancel.setOnClickListener {
+                    alertDialog.dismiss()
+                }
             }
-            btnCancel.setOnClickListener {
-                alertDialog.dismiss()
-            }
+            alertDialog.setOnDismissListener { deleteDialog = null }
+            alertDialog.show()
         }
-        alertDialog.show()
     }
 
     private fun renderNavigateToSearchScreenState() {
