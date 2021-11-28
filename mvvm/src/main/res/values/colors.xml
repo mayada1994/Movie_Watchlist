@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="slate_blue">#7E56C1</color>
+    <color name="blue_gem">#4D2B90</color>
+    <color name="midnight_blue">#180061</color>
+    <color name="east_side">#AF8EB5</color>
+    <color name="thistle">#E1BEE7</color>
+    <color name="selago">#FFF1FF</color>
+    <color name="white">@android:color/white</color>
+    <color name="transparent">@android:color/transparent</color>
+</resources>
