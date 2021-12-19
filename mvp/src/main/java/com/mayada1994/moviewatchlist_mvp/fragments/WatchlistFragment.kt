@@ -24,6 +24,8 @@ class WatchlistFragment : Fragment(), WatchlistContract.ViewInterface {
 
     private lateinit var presenter: WatchlistPresenter
 
+    private var deleteDialog: AlertDialog? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,20 +72,24 @@ class WatchlistFragment : Fragment(), WatchlistContract.ViewInterface {
     }
 
     override fun showDeleteMoviesDialog() {
-        val dialogView = DialogEditWatchlistBinding.inflate(layoutInflater)
-        val alertDialog = AlertDialog.Builder(requireContext()).setView(dialogView.root).create()
-
-        with(dialogView) {
-            txtPrompt.text = getString(R.string.dialog_delete_movie_prompt_message)
-            btnOk.setOnClickListener {
-                alertDialog.dismiss()
-                presenter.deleteMovies()
+        if (deleteDialog == null) {
+            val dialogView = DialogEditWatchlistBinding.inflate(layoutInflater)
+            val alertDialog =
+                AlertDialog.Builder(requireContext()).setView(dialogView.root).create()
+            deleteDialog = alertDialog
+            with(dialogView) {
+                txtPrompt.text = getString(R.string.dialog_delete_movie_prompt_message)
+                btnOk.setOnClickListener {
+                    alertDialog.dismiss()
+                    presenter.deleteMovies()
+                }
+                btnCancel.setOnClickListener {
+                    alertDialog.dismiss()
+                }
             }
-            btnCancel.setOnClickListener {
-                alertDialog.dismiss()
-            }
+            alertDialog.setOnDismissListener { deleteDialog = null }
+            alertDialog.show()
         }
-        alertDialog.show()
     }
 
     override fun goToSearchScreen() {
